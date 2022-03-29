@@ -2,7 +2,7 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 import en from '../../medias/translations/en.json';
-import uk from '../../medias/translations/ua.json';
+import uk from '../../medias/translations/uk.json';
 
 const resources = {
     en: { translation: { ...en } },
