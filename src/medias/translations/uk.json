@@ -9,5 +9,7 @@
     "share": "Share",
     "back": "Back",
     "login": "Login",
-    "register": "Register"
+    "register": "Sign up",
+    "send_help_button": "Send help now",
+    "send_help_text": "If you are currently in danger and need help right now you can trigger an alert. Only do this if you need help right now."
 }

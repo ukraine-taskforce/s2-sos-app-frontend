@@ -3,13 +3,13 @@ import styles from "./Button.module.css";
 import { Spacer } from "./Spacer";
 
 export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: "normal" | "highlight" | "white";
-  fullWidth?: boolean;
-  centered?: boolean;
-  focus?: boolean;
-  floats?: boolean;
-  leadingIcon?: React.ReactChild;
-  trailingIcon?: React.ReactChild;
+    variant?: 'normal' | 'highlight' | 'white' | 'emergency';
+    fullWidth?: boolean;
+    centered?: boolean;
+    focus?: boolean;
+    floats?: boolean;
+    leadingIcon?: React.ReactChild;
+    trailingIcon?: React.ReactChild;
 }
 
 export const Button: React.FunctionComponent<ButtonProps> = ({
