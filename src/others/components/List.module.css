@@ -15,7 +15,7 @@ ol.list li > p {
     margin-inline-start: 0.6em;
     font-size: 20px;
     font-weight: 700;
-    color: #163793;
+    color: var(--color-secondary);
     display: flex;
     flex-direction: column;
 }
@@ -23,7 +23,7 @@ ol.list li > p {
 ol.list li > p> span {
     display: inline-block;
     font-size: 12px;
-    color: #717171;
+    color: var(--color-dark-grey);
     font-weight: 400;
     line-height: 16px;
 }

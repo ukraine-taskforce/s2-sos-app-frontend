@@ -32,6 +32,7 @@
 
 .selector {
     position: relative;
+    min-width: 124px;
 }
 
 .dropdown {
