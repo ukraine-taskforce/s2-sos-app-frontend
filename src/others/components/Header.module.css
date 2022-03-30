@@ -42,6 +42,7 @@
 .headerItem {
   cursor: pointer;
   padding: 10px 0px;
+  color: var(--color-secondary);
 }
 
 .wrapper > *:not(:last-child) {

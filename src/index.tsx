@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClientProvider } from 'react-query';
 
 import { Home } from './pages/home';
+import { About } from './pages/about';
 import { FormContextProvider } from './others/contexts/form';
 import { queryClient } from './others/contexts/api';
 
@@ -19,6 +20,7 @@ ReactDOM.render(
                 <BrowserRouter>
                     <Routes>
                         <Route path='/' element={<Home />} />
+                        <Route path='/about' element={<About />} />
                         <Route path='/login' element={<Home />} />
                         <Route path='/register' element={<Home />} />
                         {/* <Route path='/ua' element={<CountryDetail id='ua' />} />
