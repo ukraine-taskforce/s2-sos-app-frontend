@@ -33,7 +33,9 @@ export function Home() {
                     </Button>
                 </div>
                 <Spacer size={250} />
-                <div>
+                <div className={styles.emergency}>
+                    <span>{t('or')}</span>
+
                     <p>{t('send_help_text')}</p>
                 </div>
                 <Button
