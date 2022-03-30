@@ -22,7 +22,7 @@ const Flag = ({
         return (
             <React.Fragment>
                 <ImgFlagUk alt='ukrainian' className={className} />
-                <span>UKR</span>
+                <span>UA</span>
             </React.Fragment>
         );
     }
