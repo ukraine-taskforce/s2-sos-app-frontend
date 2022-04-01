@@ -99,12 +99,6 @@
     color: var(--color-white);
 }
 
-.highlight:hover, .highlight:focus, .highlight:active {
-     background-color: var(--color-white);
-    border: 1px solid var(--color-action);
-    color: var(--color-action);
-}
-
 .emergency {
   background-color: var(--color-emergency);
   color: var(--color-white);
