@@ -6,6 +6,8 @@ import { Header } from '../../others/components/Header';
 import { Spacer } from '../../others/components/Spacer';
 import { Text } from '../../others/components/Text';
 import { Content } from '../../others/components/Content';
+import { ImgNext } from '../../medias/images/UGT_Asset_UI_ButtonNext';
+
 import styles from './howto.module.css';
 export function Howto() {
     const { t } = useTranslation();
@@ -29,8 +31,9 @@ export function Howto() {
                     variant='highlight'
                     fullWidth
                     onClick={() => navigate(`/`)}
+                    trailingIcon={<ImgNext alt='' />}
                 >
-                    <span className={styles.noWrap}>{t('next')}</span>
+                    {t('next')}
                 </Button>
             </Content>
         </React.Fragment>

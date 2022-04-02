@@ -1,13 +1,13 @@
-import React from "react";
-import { useTranslation } from "react-i18next";
+import React from 'react';
+import { useTranslation } from 'react-i18next';
 
-import styles from "./LanguageSelector.module.css";
+import styles from './LanguageSelector.module.css';
 
-import { AvailableLang, availableLangs, storeLanguage } from "../contexts/i18n";
-import { ImgFlagUk } from "../../medias/images/UGT_Asset_FlagSelector_UKR";
-import { ImgFlagEn } from "../../medias/images/UGT_Asset_FlagSelector_ENG";
-import { ImgDropdown } from "../../medias/images/UGT_Asset_UI_Dropdown";
-import { Card } from "./Card";
+import { AvailableLang, availableLangs, storeLanguage } from '../contexts/i18n';
+import { ImgFlagUk } from '../../medias/images/UGT_Asset_FlagSelector_UKR';
+import { ImgFlagEn } from '../../medias/images/UGT_Asset_FlagSelector_ENG';
+import { ImgDropdown } from '../../medias/images/UGT_Asset_UI_Dropdown';
+import { Card } from './Card';
 
 export interface LanguageSelectorProps {}
 
@@ -91,7 +91,7 @@ export const LanguageSelector: React.FunctionComponent<
             {expanded && (
                 <Card className={styles.dropdown}>
                     {availableLangs
-                        // .filter((lang) => lang !== currentLang)
+                        .filter((lang) => lang !== currentLang)
                         .map((lang) => {
                             return (
                                 <div
@@ -110,4 +110,37 @@ export const LanguageSelector: React.FunctionComponent<
             )}
         </div>
     );
+
+    // return (
+    //     <div
+    //         ref={ref}
+    //         className={styles.selector}
+    //         onClick={() => setExpanded(!expanded)}
+    //     >
+    //         <Card>
+    //             <Flag className={styles.flagIcon} lang={currentLang} />
+    //             <ImgDropdown className={styles.dropdownIcon} alt='' />
+    //         </Card>
+    //         {expanded && (
+    //             <Card className={styles.dropdown}>
+    //                 {availableLangs
+    //                     .filter((lang) => lang !== currentLang)
+    //                     .map((lang) => {
+    //                         return (
+    //                             <div
+    //                                 key={lang}
+    //                                 className={styles.dropdownItem}
+    //                                 onClick={() => selectLang(lang)}
+    //                             >
+    //                                 <Flag
+    //                                     className={styles.flagIcon}
+    //                                     lang={lang as AvailableLang}
+    //                                 />
+    //                             </div>
+    //                         );
+    //                     })}
+    //             </Card>
+    //         )}
+    //     </div>
+    // );
 };
