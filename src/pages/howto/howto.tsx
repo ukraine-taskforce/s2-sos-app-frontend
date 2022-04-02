@@ -12,6 +12,7 @@ import styles from './howto.module.css';
 export function Howto() {
     const { t } = useTranslation();
     const navigate = useNavigate();
+    const [displayStep, setDisplayStep] = React.useState(0);
     return (
         <React.Fragment>
             <Header hasHeadline hasLangSelector />
@@ -23,18 +24,33 @@ export function Howto() {
                 <Spacer size={50} />
 
                 <div>
-                    <Text>{t('howto_text')}</Text>
+                    {displayStep === 0 && <Text>{t('howto_text_0')}</Text>}
+                    {displayStep === 1 && <Text>{t('howto_text_1')}</Text>}
                 </div>
                 <Spacer size={250} />
 
-                <Button
-                    variant='highlight'
-                    fullWidth
-                    onClick={() => navigate(`/`)}
-                    trailingIcon={<ImgNext alt='' />}
-                >
-                    {t('next')}
-                </Button>
+                {displayStep === 0 && (
+                    <Button
+                        variant='highlight'
+                        fullWidth
+                        onClick={() => setDisplayStep(1)}
+                        trailingIcon={<ImgNext alt='' />}
+                    >
+                        {t('next')}
+                    </Button>
+                )}
+                {displayStep === 1 && (
+                    <div>
+                        <Button
+                            variant='highlight'
+                            fullWidth
+                            onClick={() => setDisplayStep(0)}
+                            trailingIcon={<ImgNext alt='' />}
+                        >
+                            {t('next')}
+                        </Button>
+                    </div>
+                )}
             </Content>
         </React.Fragment>
     );

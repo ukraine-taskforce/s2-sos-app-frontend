@@ -110,37 +110,4 @@ export const LanguageSelector: React.FunctionComponent<
             )}
         </div>
     );
-
-    // return (
-    //     <div
-    //         ref={ref}
-    //         className={styles.selector}
-    //         onClick={() => setExpanded(!expanded)}
-    //     >
-    //         <Card>
-    //             <Flag className={styles.flagIcon} lang={currentLang} />
-    //             <ImgDropdown className={styles.dropdownIcon} alt='' />
-    //         </Card>
-    //         {expanded && (
-    //             <Card className={styles.dropdown}>
-    //                 {availableLangs
-    //                     .filter((lang) => lang !== currentLang)
-    //                     .map((lang) => {
-    //                         return (
-    //                             <div
-    //                                 key={lang}
-    //                                 className={styles.dropdownItem}
-    //                                 onClick={() => selectLang(lang)}
-    //                             >
-    //                                 <Flag
-    //                                     className={styles.flagIcon}
-    //                                     lang={lang as AvailableLang}
-    //                                 />
-    //                             </div>
-    //                         );
-    //                     })}
-    //             </Card>
-    //         )}
-    //     </div>
-    // );
 };
