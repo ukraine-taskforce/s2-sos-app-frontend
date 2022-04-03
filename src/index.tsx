@@ -3,8 +3,7 @@ import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClientProvider } from 'react-query';
 
-import { Home } from './pages/home';
-import { About } from './pages/about';
+import { Howto } from './pages/howto';
 import { FormContextProvider } from './others/contexts/form';
 import { queryClient } from './others/contexts/api';
 
@@ -20,15 +19,7 @@ ReactDOM.render(
             <FormContextProvider>
                 <BrowserRouter>
                     <Routes>
-                        <Route path='/' element={<Home />} />
-                        <Route path='/about' element={<About />} />
-                        <Route path='/login' element={<Home />} />
-                        <Route path='/register' element={<Home />} />
-                        {/* <Route path='/ua' element={<CountryDetail id='ua' />} />
-                        <Route path='/pl' element={<CountryDetail id='pl' />} />
-                        <Route path='/cz' element={<CountryDetail id='cz' />} />
-                        <Route path='/de' element={<CountryDetail id='de' />} />
-                        <Route path='*' element={<NotFound />} /> */}
+                        <Route path='/' element={<Howto />} />
                     </Routes>
                 </BrowserRouter>
             </FormContextProvider>
