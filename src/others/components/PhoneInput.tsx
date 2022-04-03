@@ -6,7 +6,7 @@ import {ImgClose} from "../../medias/images/UGT_Asset_UI_Close";
 
 export interface PhoneInputProps {
     country: string;
-    value: string;
+    value: string | undefined;
     placeholder: string;
     onChange: (value: string) => void;
 }
@@ -33,7 +33,7 @@ const PhoneInputCustom: React.FunctionComponent<PhoneInputProps> = ({country, va
                                dropdownClass={styles.button}
                                enableSearch />
 
-        {value.length > 0 && <ClearButton onClick={onChange} />}
+        {value && value.length > 0 && <ClearButton onClick={onChange} />}
     </div>
 };
 

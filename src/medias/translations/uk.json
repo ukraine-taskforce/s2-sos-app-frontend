@@ -36,5 +36,10 @@
     "landing_location": "Specific location (Optional)",
     "landing_location_placeholder": "Address or name on doorbell",
     "landing_submit_btn": "Send police to my GPS location",
-    "phone_number": "Phone number"
+    "phone_number": "Phone number",
+    "alerted_title": "Your request for help has been received",
+    "alerted_subtitle": "The authorities will be automatically informed now and will send help to your location as soon as possible.",
+    "alerted_btn": "Cancel",
+    "alerted_confirmed": "You can close this browser now",
+    "alerted_canceled": "Your request has been canceled"
 }

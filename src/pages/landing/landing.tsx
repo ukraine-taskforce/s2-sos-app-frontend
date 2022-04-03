@@ -11,14 +11,15 @@ import styles from "./landing.module.css";
 import { ImgLocationPin } from '../../medias/images/UGT_Asset_UI_LocationPin';
 import {useNavigate} from "react-router-dom";
 import ToggleButton from "../../others/components/ToggleButton";
+import {useSosInfoContext} from "../../others/contexts/sosInfo";
 
 interface EmergenciesOptions {
-    selectedItem: number;
-    onClick: (e: number) => void;
+    selectedItem: string;
+    onClick: (e: string) => void;
 }
 
 const EmergenciesOptions = ({selectedItem, onClick}: EmergenciesOptions) => {
-    const emergency_codes = [1, 2, 3];
+    const emergency_codes = ["1", "2", "3"];
     const { t } = useTranslation();
 
     return <div style={{display: "flex", justifyContent: "space-between", flexWrap: "wrap"}}>
@@ -33,18 +34,19 @@ const Landing = () => {
     const { t } = useTranslation();
     const navigate = useNavigate();
 
-    const [phoneNumber, setPhoneNumber] = useState<string>('');
-    const [name, setName] = useState<string>('');
-    const [location, setLocation] = useState<string>('');
-    const [emergency, setEmergency] = useState<number>(1);
+    const { currentValue, updateValue } = useSosInfoContext();
 
     const onSubmit = () => {
-        const obj = {phoneNumber, name, location, emergency};
-        console.log('Submitted!', obj);
+        console.log('Alerted:', currentValue);
         navigate('/alerted');
     }
 
-    const isFormValid = phoneNumber.trim().length > 3;
+    const isFormValid = currentValue.phoneNumber && currentValue.phoneNumber.trim().length > 3;
+
+    const setPhoneNumber = (newValue: string) => updateValue({phoneNumber: newValue});
+    const setEmergencyCode = (newValue: string) => updateValue({emergencyCode: newValue});
+    const setName = (newValue: string) => updateValue({name: newValue});
+    const setLocation = (newValue: string) => updateValue({location: newValue});
 
     return (
         <React.Fragment>
@@ -55,22 +57,22 @@ const Landing = () => {
 
                 <Text>{t('phone_number')} <span className={styles.requiredField}>*</span></Text>
                 <Spacer size={10} />
-                <PhoneInput country={'ua'} value={phoneNumber} placeholder={t('phone_number')} onChange={setPhoneNumber} />
+                <PhoneInput country={'ua'} value={currentValue.phoneNumber} placeholder={t('phone_number')} onChange={setPhoneNumber} />
                 <Spacer size={30} />
 
                 <Text>{t('landing_emergency_label')}</Text>
                 <Spacer size={10} />
-                <EmergenciesOptions selectedItem={emergency} onClick={setEmergency} />
+                <EmergenciesOptions selectedItem={currentValue.emergencyCode} onClick={setEmergencyCode} />
                 <Spacer size={35} />
 
                 <Text>{t('landing_name')}</Text>
                 <Spacer size={10} />
-                <Input value={name} label={t('landing_name')} placeholder={t('landing_name_placeholder')} onChange={setName} />
+                <Input value={currentValue.name || ''} label={t('landing_name')} placeholder={t('landing_name_placeholder')} onChange={setName} />
                 <Spacer size={35} />
 
                 <Text>{t('landing_location')}</Text>
                 <Spacer size={10} />
-                <Input value={location} label={t('landing_location')} placeholder={t('landing_location_placeholder')} onChange={setLocation} />
+                <Input value={currentValue.location || ''} label={t('landing_location')} placeholder={t('landing_location_placeholder')} onChange={setLocation} />
                 <Spacer size={20} />
 
                 <Button className={styles.submitButton} fullWidth onClick={onSubmit} disabled={!isFormValid}>
