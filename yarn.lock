@@ -5810,6 +5810,11 @@
     "prelude-ls" "~1.1.2"
     "type-check" "~0.3.2"
 
+"libphonenumber-js@^1.9.50":
+  "integrity" "sha512-cCzQPChw2XbordcO2LKiw5Htx5leHVfFk/EXkxNHqJfFo7Fndcb1kF5wPJpc316vCJhhikedYnVysMh3Sc7Ocw=="
+  "resolved" "https://registry.npmjs.org/libphonenumber-js/-/libphonenumber-js-1.9.50.tgz"
+  "version" "1.9.50"
+
 "lilconfig@^2.0.3", "lilconfig@2.0.4":
   "integrity" "sha512-bfTIN7lEsiooCocSISTWXkiWJkRqtL9wYtYy+8EK3Y41qh3mpwPU0ycTOgjdY9ErwXCc8QyrQp82bdL0Xkm9yA=="
   "resolved" "https://registry.npmjs.org/lilconfig/-/lilconfig-2.0.4.tgz"

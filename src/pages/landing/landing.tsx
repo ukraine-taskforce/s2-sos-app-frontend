@@ -12,6 +12,8 @@ import { ImgLocationPin } from '../../medias/images/UGT_Asset_UI_LocationPin';
 import {useNavigate} from "react-router-dom";
 import ToggleButton from "../../others/components/ToggleButton";
 import {useSosInfoContext} from "../../others/contexts/sosInfo";
+import {validatePhoneNumber} from "../../others/helpers/validatePhoneNumber";
+import FormErrorText from "../../others/components/FormErrorText";
 
 interface EmergenciesOptions {
     selectedItem: string;
@@ -35,15 +37,23 @@ const Landing = () => {
     const navigate = useNavigate();
 
     const { currentValue, updateValue } = useSosInfoContext();
+    const [phoneNumberError, setPhoneNumberError] = useState<string | undefined>();
 
     const onSubmit = () => {
         console.log('Alerted:', currentValue);
         navigate('/alerted');
     }
 
-    const isFormValid = currentValue.phoneNumber && currentValue.phoneNumber.trim().length > 3;
+    const isFormValid = currentValue.phoneNumber && currentValue.phoneNumber.trim().length > 4 && !phoneNumberError;
 
-    const setPhoneNumber = (newValue: string) => updateValue({phoneNumber: newValue});
+    const setPhoneNumber = (newValue: string, countryCode: string) => {
+        setPhoneNumberError(undefined);
+        updateValue({phoneNumber: newValue});
+
+        const validationResult = validatePhoneNumber(newValue, countryCode);
+        if(validationResult.isInvalid) setPhoneNumberError(validationResult.error);
+    }
+
     const setEmergencyCode = (newValue: string) => updateValue({emergencyCode: newValue});
     const setName = (newValue: string) => updateValue({name: newValue});
     const setLocation = (newValue: string) => updateValue({location: newValue});
@@ -57,7 +67,12 @@ const Landing = () => {
 
                 <Text>{t('phone_number')} <span className={styles.requiredField}>*</span></Text>
                 <Spacer size={10} />
-                <PhoneInput country={'ua'} value={currentValue.phoneNumber} placeholder={t('phone_number')} onChange={setPhoneNumber} />
+                <PhoneInput country={'ua'}
+                            value={currentValue.phoneNumber}
+                            placeholder={t('phone_number')}
+                            isValid={!phoneNumberError}
+                            onChange={(value: string, countryCode: string) => setPhoneNumber(value, countryCode)} />
+                {phoneNumberError && <FormErrorText>{t(`landing_phoneNumber_${phoneNumberError}`)}</FormErrorText>}
                 <Spacer size={30} />
 
                 <Text>{t('landing_emergency_label')}</Text>

@@ -6,6 +6,10 @@
   justify-content: space-between;
 }
 
+.invalid {
+  border: 2px solid var(--color-red);
+}
+
 .container {
   max-width: 85%;
 }
@@ -16,6 +20,7 @@
   background: none !important;
   border: none !important;
   flex-grow: 1 !important;
+  width: 100% !important;
 }
 
 .input:focus,
