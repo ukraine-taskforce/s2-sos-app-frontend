@@ -11,6 +11,7 @@ import './index.css';
 import './others/contexts/i18n';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import Landing from "./pages/landing/landing";
 
 ReactDOM.render(
     <React.StrictMode>
@@ -20,6 +21,8 @@ ReactDOM.render(
                 <BrowserRouter>
                     <Routes>
                         <Route path='/' element={<Howto />} />
+                        <Route path='/landing' element={<Landing />} />
+                        <Route path='/alerted' element={<Landing />} />
                     </Routes>
                 </BrowserRouter>
             </FormContextProvider>

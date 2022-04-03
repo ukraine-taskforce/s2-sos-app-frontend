@@ -10,6 +10,7 @@ import { Checkmark } from '../../others/components/Checkmark';
 import { ImgNext } from '../../medias/images/UGT_Asset_UI_ButtonNext';
 
 import styles from './howto.module.css';
+
 export function Howto() {
     const { t } = useTranslation();
     // const navigate = useNavigate();

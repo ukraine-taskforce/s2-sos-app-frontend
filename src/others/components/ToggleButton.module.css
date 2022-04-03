@@ -1,0 +1,14 @@
+.card {
+  display: flex;
+  justify-content: center;
+  padding: 8px 22px;
+  border-radius: 32px;
+  cursor: pointer;
+  background-color: var(--color-gray);
+  margin-top: 7px;
+}
+
+.activeCard {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+}

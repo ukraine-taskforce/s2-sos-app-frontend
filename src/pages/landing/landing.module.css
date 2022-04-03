@@ -1,0 +1,20 @@
+h1 {
+    color: var(--color-secondary);
+}
+
+.submitButton {
+    background-color: var(--color-red);
+    color: var(--color-white);
+}
+
+.submitButton div {
+    display: flex;
+}
+
+.submitButton svg {
+    padding-right: 5px;
+}
+
+.requiredField {
+    color: var(--color-red);
+}

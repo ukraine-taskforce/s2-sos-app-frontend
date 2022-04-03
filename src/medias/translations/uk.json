@@ -25,5 +25,16 @@
     "howto_title": "How to use Syl’nishi in case of an emergency",
     "howto_text_0": "Tell us where we can contact you and optionally give us a little more context of the emergency situation you are in.",
     "howto_text_1": "Press the red button and allow us to see your location so we can alert the appropriate local emergency services to your location.",
-    "start_button_text": "Let’s start"
+    "start_button_text": "Let’s start",
+    "landing_title": "Please tell us more about yourself and your emergency",
+    "landing_emergency_label": "What is the emergency?",
+    "landing_emergency_1": "I'm physically threatened",
+    "landing_emergency_2": "Dispute",
+    "landing_emergency_3": "Need ambulance",
+    "landing_name": "Your name (Optional)",
+    "landing_name_placeholder": "Your full name",
+    "landing_location": "Specific location (Optional)",
+    "landing_location_placeholder": "Address or name on doorbell",
+    "landing_submit_btn": "Send police to my GPS location",
+    "phone_number": "Phone number"
 }
