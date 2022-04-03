@@ -11,18 +11,23 @@ import './index.css';
 import './others/contexts/i18n';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
+import Landing from "./pages/landing/landing";
+import Alerted from "./pages/alerted/alerted";
+import {SosInfoContextProvider} from "./others/contexts/sosInfo";
 
 ReactDOM.render(
     <React.StrictMode>
         {' '}
         <QueryClientProvider client={queryClient}>
-            <FormContextProvider>
+            <SosInfoContextProvider>
                 <BrowserRouter>
                     <Routes>
                         <Route path='/' element={<Howto />} />
+                        <Route path='/landing' element={<Landing />} />
+                        <Route path='/alerted' element={<Alerted />} />
                     </Routes>
                 </BrowserRouter>
-            </FormContextProvider>
+            </SosInfoContextProvider>
         </QueryClientProvider>
     </React.StrictMode>,
     document.getElementById('root')
