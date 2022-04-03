@@ -36,7 +36,7 @@ const Landing = () => {
     const [phoneNumber, setPhoneNumber] = useState<string>('');
     const [name, setName] = useState<string>('');
     const [location, setLocation] = useState<string>('');
-    const [emergency, setEmergency] = useState<number>(0);
+    const [emergency, setEmergency] = useState<number>(1);
 
     const onSubmit = () => {
         const obj = {phoneNumber, name, location, emergency};
