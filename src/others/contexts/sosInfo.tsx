@@ -7,7 +7,8 @@ export interface SosInfoI {
   address?: string;
   geolocation?: {
     latitude: number,
-    longitude: number
+    longitude: number,
+    accuracy: number
   };
 }
 

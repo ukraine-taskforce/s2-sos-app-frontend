@@ -43,7 +43,7 @@ const Landing = () => {
     const onSubmit = () => {
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition((position) => {
-                setGeoLocation(position.coords.longitude, position.coords.longitude);
+                setGeoLocation(position.coords.latitude, position.coords.longitude, position.coords.accuracy);
                 navigate('/alerted');
             }, (error) => setErrorMessage(t('landing_error_geolocation')));
         }
@@ -63,7 +63,7 @@ const Landing = () => {
     const setEmergencyCode = (newValue: string) => updateValue({emergencyCode: newValue});
     const setName = (newValue: string) => updateValue({name: newValue});
     const setAddress = (newValue: string) => updateValue({address: newValue});
-    const setGeoLocation = (newLatitude: number, newLongitude: number) => updateValue({geolocation: {latitude: newLatitude, longitude: newLongitude}});
+    const setGeoLocation = (newLatitude: number, newLongitude: number, newAccuracy: number) => updateValue({geolocation: {latitude: newLatitude, longitude: newLongitude, accuracy: newAccuracy}});
 
     return (
         <React.Fragment>
