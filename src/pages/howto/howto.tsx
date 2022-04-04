@@ -47,6 +47,7 @@ export function Howto() {
                         fullWidth
                         onClick={() => setDisplayStep(1)}
                         trailingIcon={<ImgNext alt='' />}
+                        className={styles.button0}
                     >
                         {t('start_set_up_button')}
                     </Button>
