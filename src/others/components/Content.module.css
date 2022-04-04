@@ -1,7 +1,7 @@
 .bodyWrapper {
     padding: var(--padding-content);
     position: relative;
-    height: 78vh;
+    height: 80vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
