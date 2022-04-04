@@ -8,6 +8,7 @@ import { Text } from '../../others/components/Text';
 import { Content } from '../../others/components/Content';
 import { Checkmark } from '../../others/components/Checkmark';
 import { ImgNext } from '../../medias/images/UGT_Asset_UI_ButtonNext';
+import Markdown from 'react-markdown';
 
 import styles from './howto.module.css';
 
@@ -19,17 +20,29 @@ export function Howto() {
         <React.Fragment>
             <Header hasHeadline hasLangSelector />
             <Content>
-                <div className={styles.welcome}>
-                    <h1>{t('howto_title')}</h1>
-                </div>
+                <div className={styles.imgPlaceholder}></div>
 
-                <Spacer size={50} />
+                {/* <Spacer size={50} /> */}
 
                 <div>
-                    {displayStep === 0 && <Text>{t('howto_text_0')}</Text>}
-                    {displayStep === 1 && <Text>{t('howto_text_1')}</Text>}
+                    {displayStep === 0 && (
+                        <Text alignment='center' className={styles.textB}>
+                            <Markdown>{t('howto_text_0')}</Markdown>
+                        </Text>
+                    )}
+                    {displayStep === 1 && (
+                        <Text alignment='center' className={styles.text}>
+                            <Markdown>{t('howto_text_1_1')}</Markdown>
+                            <Markdown>{t('howto_text_1_2')}</Markdown>
+                        </Text>
+                    )}
+                    {displayStep === 2 && (
+                        <Text alignment='center' className={styles.text}>
+                            <Markdown>{t('howto_text_2')}</Markdown>
+                        </Text>
+                    )}
                 </div>
-                <Spacer size={250} />
+                {/* <Spacer size={250} /> */}
 
                 {displayStep === 0 && (
                     <Button
@@ -38,10 +51,21 @@ export function Howto() {
                         onClick={() => setDisplayStep(1)}
                         trailingIcon={<ImgNext alt='' />}
                     >
+                        {t('start_set_up_button')}
+                    </Button>
+                )}
+
+                {displayStep === 1 && (
+                    <Button
+                        variant='highlight'
+                        fullWidth
+                        onClick={() => setDisplayStep(2)}
+                        trailingIcon={<ImgNext alt='' />}
+                    >
                         {t('next')}
                     </Button>
                 )}
-                {displayStep === 1 && (
+                {displayStep === 2 && (
                     <div>
                         {/* <Checkmark /> */}
                         <Button

@@ -22,9 +22,10 @@
     "about_second_small": "Let us know where you are staying, and who you are staying with, so we know where to find you.",
     "about_third": "When you’re in trouble, hit the Send Help button",
     "about_third_small": "When you hit the help button, we will contact the emergency services and let you know when they are on the way to your location.",
-    "howto_title": "How to use Syl’nishi in case of an emergency",
-    "howto_text_0": "Tell us where we can contact you and optionally give us a little more context of the emergency situation you are in.",
-    "howto_text_1": "Press the red button and allow us to see your location so we can alert the appropriate local emergency services to your location.",
+    "howto_text_0": "Syl’nishi’s **SOS-app** provides Ukrainian refugees with instant access to emergency services at the touch of a button",
+    "howto_text_1_1": "**Tell us where we can contact you** and give us a little more context of the emergency situation you are in.",
+    "howto_text_1_2": "(You can fill in your contact information now, and the app will remember it for later)",
+    "howto_text_2": "**Press the red button** and allow us to see your location so we can alert the appropriate local emergency services to your location.",
     "start_button_text": "Let’s start",
     "landing_title": "Please tell us more about yourself and your emergency",
     "landing_emergency_label": "What is the emergency?",
@@ -41,5 +42,6 @@
     "alerted_subtitle": "The authorities will be automatically informed now and will send help to your location as soon as possible.",
     "alerted_btn": "Cancel",
     "alerted_confirmed": "You can close this browser now",
-    "alerted_canceled": "Your request has been canceled"
+    "alerted_canceled": "Your request has been canceled",
+    "start_set_up_button": "Set up Sylnishi SOS-app"
 }
