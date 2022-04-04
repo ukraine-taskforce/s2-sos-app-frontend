@@ -4,7 +4,12 @@ export interface SosInfoI {
   phoneNumber: string | undefined;
   emergencyCode: string;
   name?: string;
-  location?: string;
+  address?: string;
+  geolocation?: {
+    latitude: number,
+    longitude: number,
+    accuracy: number
+  };
 }
 
 export interface SosInfoContextValue {
@@ -35,7 +40,11 @@ export const SosInfoContextProvider: React.FunctionComponent = ({ children }) =>
     (values: { [x: string]: any }) => {
       setCurrentValue({
         ...currentValue,
-        ...values
+        ...values,
+        geolocation: {
+          ...currentValue.geolocation,
+          ...values.geolocation,
+        },
       });
     },
     [currentValue, setCurrentValue]
