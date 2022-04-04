@@ -38,13 +38,19 @@ const Landing = () => {
 
     const { currentValue, updateValue } = useSosInfoContext();
     const [phoneNumberError, setPhoneNumberError] = useState<string | undefined>();
+    const [errorMessage, setErrorMessage] = useState<string>();
 
     const onSubmit = () => {
-        console.log('Alerted:', currentValue);
-        navigate('/alerted');
+        if ("geolocation" in navigator) {
+            navigator.geolocation.getCurrentPosition((position) => {
+                setGeoLocation(position.coords.longitude, position.coords.longitude);
+                navigate('/alerted');
+            }, (error) => setErrorMessage(t('landing_error_geolocation')));
+        }
     }
 
-    const isFormValid = currentValue.phoneNumber && currentValue.phoneNumber.trim().length > 4 && !phoneNumberError;
+    const isPhoneNumberValid = currentValue.phoneNumber && currentValue.phoneNumber.trim().length > 4 && !phoneNumberError;
+    const isFormValid = isPhoneNumberValid;
 
     const setPhoneNumber = (newValue: string, countryCode: string) => {
         setPhoneNumberError(undefined);
@@ -56,7 +62,8 @@ const Landing = () => {
 
     const setEmergencyCode = (newValue: string) => updateValue({emergencyCode: newValue});
     const setName = (newValue: string) => updateValue({name: newValue});
-    const setLocation = (newValue: string) => updateValue({location: newValue});
+    const setAddress = (newValue: string) => updateValue({address: newValue});
+    const setGeoLocation = (newLatitude: number, newLongitude: number) => updateValue({geolocation: {latitude: newLatitude, longitude: newLongitude}});
 
     return (
         <React.Fragment>
@@ -85,9 +92,9 @@ const Landing = () => {
                 <Input value={currentValue.name || ''} label={t('landing_name')} placeholder={t('landing_name_placeholder')} onChange={setName} />
                 <Spacer size={35} />
 
-                <Text>{t('landing_location')}</Text>
+                <Text>{t('landing_address')}</Text>
                 <Spacer size={10} />
-                <Input value={currentValue.location || ''} label={t('landing_location')} placeholder={t('landing_location_placeholder')} onChange={setLocation} />
+                <Input value={currentValue.address || ''} label={t('landing_address')} placeholder={t('landing_address_placeholder')} onChange={setAddress} />
                 <Spacer size={20} />
 
                 <Button className={styles.submitButton} fullWidth onClick={onSubmit} disabled={!isFormValid}>
@@ -96,6 +103,8 @@ const Landing = () => {
                         <Text>{t('landing_submit_btn')}</Text>
                     </div>
                 </Button>
+
+                {errorMessage && <FormErrorText>{errorMessage}</FormErrorText>}
             </Content>
         </React.Fragment>
     );

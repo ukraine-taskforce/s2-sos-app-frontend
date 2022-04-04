@@ -45,7 +45,7 @@ const Alerted = () => {
 
     useEffect(() => {
         if(!currentValue || !currentValue.phoneNumber) navigate("/");
-        setLocation(currentValue.location);
+        setLocation(currentValue.address);
     }, []);
 
     return (
