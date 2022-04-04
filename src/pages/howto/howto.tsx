@@ -3,7 +3,6 @@ import React from 'react';
 import { useTranslation } from 'react-i18next';
 import { Button } from '../../others/components/Button';
 import { Header } from '../../others/components/Header';
-import { Spacer } from '../../others/components/Spacer';
 import { Text } from '../../others/components/Text';
 import { Content } from '../../others/components/Content';
 import { Checkmark } from '../../others/components/Checkmark';
@@ -20,29 +19,27 @@ export function Howto() {
         <React.Fragment>
             <Header hasHeadline hasLangSelector />
             <Content>
-                <div className={styles.imgPlaceholder}></div>
-
-                {/* <Spacer size={50} /> */}
-
                 <div>
-                    {displayStep === 0 && (
-                        <Text alignment='center' className={styles.textB}>
-                            <Markdown>{t('howto_text_0')}</Markdown>
-                        </Text>
-                    )}
-                    {displayStep === 1 && (
-                        <Text alignment='center' className={styles.text}>
-                            <Markdown>{t('howto_text_1_1')}</Markdown>
-                            <Markdown>{t('howto_text_1_2')}</Markdown>
-                        </Text>
-                    )}
-                    {displayStep === 2 && (
-                        <Text alignment='center' className={styles.text}>
-                            <Markdown>{t('howto_text_2')}</Markdown>
-                        </Text>
-                    )}
+                    <div className={styles.imgPlaceholder}></div>
+                    <div>
+                        {displayStep === 0 && (
+                            <Text alignment='center' className={styles.textB}>
+                                <Markdown>{t('howto_text_0')}</Markdown>
+                            </Text>
+                        )}
+                        {displayStep === 1 && (
+                            <Text alignment='center' className={styles.text}>
+                                <Markdown>{t('howto_text_1_1')}</Markdown>
+                                <Markdown>{t('howto_text_1_2')}</Markdown>
+                            </Text>
+                        )}
+                        {displayStep === 2 && (
+                            <Text alignment='center' className={styles.text}>
+                                <Markdown>{t('howto_text_2')}</Markdown>
+                            </Text>
+                        )}
+                    </div>
                 </div>
-                {/* <Spacer size={250} /> */}
 
                 {displayStep === 0 && (
                     <Button
@@ -56,14 +53,23 @@ export function Howto() {
                 )}
 
                 {displayStep === 1 && (
-                    <Button
-                        variant='highlight'
-                        fullWidth
-                        onClick={() => setDisplayStep(2)}
-                        trailingIcon={<ImgNext alt='' />}
-                    >
-                        {t('next')}
-                    </Button>
+                    <div>
+                        <Button
+                            variant='highlight'
+                            fullWidth
+                            onClick={() => setDisplayStep(2)}
+                            trailingIcon={<ImgNext alt='' />}
+                        >
+                            {t('next')}
+                        </Button>
+                        <Button
+                            variant='white'
+                            fullWidth
+                            onClick={() => setDisplayStep(0)}
+                        >
+                            {t('back')}
+                        </Button>
+                    </div>
                 )}
                 {displayStep === 2 && (
                     <div>
@@ -74,6 +80,13 @@ export function Howto() {
                             onClick={() => setDisplayStep(0)}
                         >
                             {t('start_button_text')}
+                        </Button>
+                        <Button
+                            variant='white'
+                            fullWidth
+                            onClick={() => setDisplayStep(1)}
+                        >
+                            {t('back')}
                         </Button>
                     </div>
                 )}
