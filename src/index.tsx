@@ -12,6 +12,7 @@ import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import Landing from "./pages/landing/landing";
 import Alerted from "./pages/alerted/alerted";
 import {SosInfoContextProvider} from "./others/contexts/sosInfo";
+import Emergency from "./pages/emergency/emergency";
 
 ReactDOM.render(
     <React.StrictMode>
@@ -22,6 +23,7 @@ ReactDOM.render(
                     <Routes>
                         <Route path='/' element={<Howto />} />
                         <Route path='/landing' element={<Landing />} />
+                        <Route path='/emergency' element={<Emergency />} />
                         <Route path='/alerted' element={<Alerted />} />
                     </Routes>
                 </BrowserRouter>

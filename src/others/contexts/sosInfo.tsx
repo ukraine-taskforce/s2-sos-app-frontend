@@ -1,4 +1,5 @@
-import React from "react";
+import React, {useEffect} from "react";
+import {getSosInfoStorage} from "../storage/sosInfoStorage";
 
 export interface SosInfoI {
   phoneNumber: string | undefined;
@@ -34,7 +35,12 @@ export function useSosInfoContext() {
 }
 
 export const SosInfoContextProvider: React.FunctionComponent = ({ children }) => {
-  const [currentValue, setCurrentValue] = React.useState<SosInfoI>(defaultValue);
+  const [currentValue, setCurrentValue] = React.useState<SosInfoI>(() => {
+    const localStorageInfo = getSosInfoStorage();
+    if(localStorageInfo) return localStorageInfo;
+
+    return defaultValue;
+  });
 
   const updateValue = React.useCallback(
     (values: { [x: string]: any }) => {

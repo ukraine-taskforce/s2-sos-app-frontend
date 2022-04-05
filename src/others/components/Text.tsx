@@ -1,11 +1,15 @@
+import React from "react";
+import styles from "./Text.module.css";
+
 export interface TextProps {
   alignment?: "center" | "left" | "right";
   variant?: "normal" | "light" | "bold";
   className?: string;
   color?: string;
+  required?: boolean;
 }
 
-export const Text: React.FunctionComponent<TextProps> = ({ alignment = "left", variant = "normal", className, color, children }) => {
+export const Text: React.FunctionComponent<TextProps> = ({ alignment = "left", variant = "normal", className, color, required = false, children }) => {
   return (
       <span
           className={className}
@@ -17,6 +21,7 @@ export const Text: React.FunctionComponent<TextProps> = ({ alignment = "left", v
           }}
       >
           {children}
+          {required && <span className={styles.requiredField}> *</span>}
       </span>
   );
 };
