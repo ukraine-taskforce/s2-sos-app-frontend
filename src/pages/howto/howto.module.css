@@ -3,69 +3,50 @@
     height: 70px;
 }
 
-.welcome {
-    color: var(--color-secondary);
-}
-
-.welcome > h1 {
-    font-size: 35px;
-    font-weight: 700;
-}
-
-.welcome > p {
-    font-size: 24px;
-    line-height: 32px;
-    font-weight: 400;
-}
-
-.emergency > p {
-    font-size: 14px;
-    line-height: 18px;
-    font-weight: 400;
-    margin-bottom: 20px;
-}
-
-.emergency > span {
-    font-size: 16px;
-    font-weight: 700;
-    margin-bottom: 30px;
-    color: var(--color-gray);
-    overflow: hidden;
-    text-align: center;
-    width: 100%;
+.imgPlaceholder {
+    width: 213px;
+    height: 233px;
+    background: #eaeaea;
+    border-radius: 23px;
     display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 50px;
 }
 
-.emergency > span::before {
-    right: 0.5em;
-    margin-left: -50%;
+.textB {
+    font-size: 18px;
+    line-height: 24px;
+    color: var(--color-secondary-dark);
 }
 
-.emergency > span::after {
-    left: 0.5em;
-    margin-right: -50%;
+.text {
+    font-size: 16px;
+    line-height: 24px;
+    color: var(--color-secondary-dark);
 }
 
-.emergency > span::after,
-.emergency > span::before {
-    background-color: var(--color-gray);
-    content: '';
-    display: inline-block;
-    height: 1px;
-    position: relative;
-    vertical-align: middle;
-    width: 50%;
-}
-
-.welcome > p > b {
-    font-weight: 700;
-}
-
-.infoRow {
-    display: flex;
-    justify-content: space-around;
+.text > p {
+    margin-bottom: 35px;
 }
 
 .noWrap {
     white-space: nowrap;
 }
+
+.button0 {
+    margin-bottom: 50px;
+}
+
+.checkBoxContainer {
+    display: flex;
+}
+
+.checkBoxText {
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--color-dark-grey);
+    margin-bottom: 17px;
+}
+
+

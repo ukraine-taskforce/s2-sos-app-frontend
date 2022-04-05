@@ -2,7 +2,8 @@ import React from "react";
 import styles from "./Button.module.css";
 import { Spacer } from "./Spacer";
 
-export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+export interface ButtonProps
+    extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: 'normal' | 'highlight' | 'white' | 'emergency';
     fullWidth?: boolean;
     centered?: boolean;
@@ -10,6 +11,7 @@ export interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElemen
     floats?: boolean;
     leadingIcon?: React.ReactChild;
     trailingIcon?: React.ReactChild;
+    disabled?: boolean;
 }
 
 export const Button: React.FunctionComponent<ButtonProps> = ({

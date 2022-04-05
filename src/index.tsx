@@ -2,9 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { QueryClientProvider } from 'react-query';
-
 import { Howto } from './pages/howto';
-import { FormContextProvider } from './others/contexts/form';
 import { queryClient } from './others/contexts/api';
 
 import './index.css';

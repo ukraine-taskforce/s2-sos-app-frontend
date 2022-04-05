@@ -88,15 +88,7 @@
 
 .white {
     background-color: var(--color-white);
-    border: 1px solid var(--color-action);
     color: var(--color-action);
-}
-
-.white:hover,
-.white:focus,
-.white:active {
-    background-color: var(--color-action);
-    color: var(--color-white);
 }
 
 .emergency {
