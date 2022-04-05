@@ -1,20 +1,26 @@
 import React from 'react';
-// import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import Markdown from 'react-markdown';
+
 import { Button } from '../../others/components/Button';
 import { Header } from '../../others/components/Header';
 import { Text } from '../../others/components/Text';
 import { Content } from '../../others/components/Content';
-import { Checkmark } from '../../others/components/Checkmark';
+import Checkbox from '../../others/components/Checkbox';
 import { ImgNext } from '../../medias/images/UGT_Asset_UI_ButtonNext';
-import Markdown from 'react-markdown';
 
 import styles from './howto.module.css';
 
 export function Howto() {
     const { t } = useTranslation();
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
     const [displayStep, setDisplayStep] = React.useState(0);
+
+    const handleChange = () => {
+        displayStep === 2 ? setDisplayStep(3) : setDisplayStep(2);
+    };
+
     return (
         <React.Fragment>
             <Header hasHeadline hasLangSelector />
@@ -33,7 +39,7 @@ export function Howto() {
                                 <Markdown>{t('howto_text_1_2')}</Markdown>
                             </Text>
                         )}
-                        {displayStep === 2 && (
+                        {displayStep > 1 && (
                             <Text alignment='center' className={styles.text}>
                                 <Markdown>{t('howto_text_2')}</Markdown>
                             </Text>
@@ -72,16 +78,35 @@ export function Howto() {
                         </Button>
                     </div>
                 )}
-                {displayStep === 2 && (
+                {displayStep > 1 && (
                     <div>
-                        {/* <Checkmark /> */}
-                        <Button
-                            variant='highlight'
-                            fullWidth
-                            onClick={() => setDisplayStep(0)}
-                        >
-                            {t('start_button_text')}
-                        </Button>
+                        <div className={styles.checkBoxContainer}>
+                            <Checkbox
+                                id='checkbox'
+                                value={false}
+                                handleChange={handleChange}
+                            />
+                            <Text className={styles.checkBoxText}>
+                                {t('checkbox_text')}
+                            </Text>
+                        </div>
+
+                        {displayStep === 2 && (
+                            <Button variant='highlight' fullWidth disabled>
+                                {t('start_button_text')}
+                            </Button>
+                        )}
+
+                        {displayStep === 3 && (
+                            <Button
+                                variant='highlight'
+                                fullWidth
+                                onClick={() => navigate(`/landing`)}
+                            >
+                                {t('start_button_text')}
+                            </Button>
+                        )}
+
                         <Button
                             variant='white'
                             fullWidth

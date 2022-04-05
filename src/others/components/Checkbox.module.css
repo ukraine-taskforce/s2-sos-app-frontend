@@ -1,0 +1,33 @@
+input[type='checkbox'] {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+}
+
+.checkbox {
+    display: inline-block;
+    height: 28px;
+    width: 28px;
+    background: var(--color-white);
+    border: 2px var(--color-action) solid;
+    margin-right: 6px;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.checkboxActive {
+    border-color: var(--color-action);
+    background: var(--color-action);
+    height: 24px;
+    width: 24px;
+    margin-right: 6px;
+    border-radius: 4px;
+    display: inline-block;
+    padding-left: 4px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}

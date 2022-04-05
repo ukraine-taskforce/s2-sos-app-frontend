@@ -37,3 +37,16 @@
 .button0 {
     margin-bottom: 50px;
 }
+
+.checkBoxContainer {
+    display: flex;
+}
+
+.checkBoxText {
+    font-size: 12px;
+    line-height: 18px;
+    color: var(--color-dark-grey);
+    margin-bottom: 17px;
+}
+
+

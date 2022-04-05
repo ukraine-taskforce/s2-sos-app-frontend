@@ -7,12 +7,16 @@ export interface TextProps {
 
 export const Text: React.FunctionComponent<TextProps> = ({ alignment = "left", variant = "normal", className, color, children }) => {
   return (
-    <p
-      className={className}
-      color={color ?? ""}
-      style={{ textAlign: alignment, opacity: variant === "light" ? 0.6 : 1, fontWeight: variant === "bold" ? "bold" : "regular" }}
-    >
-      {children}
-    </p>
+      <span
+          className={className}
+          color={color ?? ''}
+          style={{
+              textAlign: alignment,
+              opacity: variant === 'light' ? 0.6 : 1,
+              fontWeight: variant === 'bold' ? 'bold' : 'regular',
+          }}
+      >
+          {children}
+      </span>
   );
 };
