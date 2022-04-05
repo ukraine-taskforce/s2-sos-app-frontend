@@ -98,6 +98,8 @@ const Alerted = () => {
                             <ImgLocationPin fill="#000" /><Text>{location}</Text>
                         </Card>
 
+                        <Spacer size={20} />
+
                         <Card className={styles.centerH}>
                             <ImgAlertCircle fill="#FFF" />
                         </Card>

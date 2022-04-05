@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {Header} from "../../others/components/Header";
 import {Content} from "../../others/components/Content";
 import {Spacer} from "../../others/components/Spacer";
