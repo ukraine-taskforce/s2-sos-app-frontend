@@ -13,11 +13,11 @@ export interface PhoneInputProps {
     isValid?: boolean;
 }
 
-interface ClearButton {
+interface ClearButtonProps {
     onClick: (value: string) => void;
 }
 
-const ClearButton: React.FunctionComponent<ClearButton> = ({onClick}) => {
+const ClearButton: React.FunctionComponent<ClearButtonProps> = ({onClick}) => {
     return <div className={styles.clearContainer}>
         <ImgClose className={styles.clearButton} onClick={() => onClick("")} alt="clear value" />
     </div>
