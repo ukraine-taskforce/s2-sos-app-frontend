@@ -1,6 +1,6 @@
 import {SosInfoI} from "../contexts/sosInfo";
 
-const STORAGE_KEY = "sosInfo";
+const STORAGE_KEY = "ugtSosInfo";
 
 export const getSosInfoStorage = () => {
     const localStorageValue = window.localStorage.getItem(STORAGE_KEY);
