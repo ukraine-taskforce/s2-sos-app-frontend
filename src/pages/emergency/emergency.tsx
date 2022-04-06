@@ -12,6 +12,7 @@ import {Button} from "../../others/components/Button";
 import {ImgPencil} from "../../medias/images/UGT_Asset_UI_Pencil";
 import {ImgSOS} from "../../medias/images/UGT_Asset_UI_SOS";
 import FormErrorText from "../../others/components/FormErrorText";
+import {getStreetAddressFromGeolocation} from "../../others/helpers/googleMapsApi";
 
 interface EmergencyOptionsI {
     selectedItem: string;
@@ -35,10 +36,10 @@ const Emergency = () => {
     const navigate = useNavigate();
 
     const { currentValue, updateValue } = useSosInfoContext();
+    const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>();
 
     const setEmergencyCode = (newValue: string) => updateValue({emergencyCode: newValue});
-    const setGeoLocation = (newLatitude: number, newLongitude: number, newAccuracy: number) => updateValue({geolocation: {latitude: newLatitude, longitude: newLongitude, accuracy: newAccuracy}});
 
     const onEditUserInfo = () => {
         navigate("/landing");
@@ -49,11 +50,29 @@ const Emergency = () => {
     }, []);
 
     const onSendAlert = () => {
+        setLoading(true);
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition((position) => {
-                setGeoLocation(position.coords.latitude, position.coords.longitude, position.coords.accuracy);
-                navigate('/alerted');
-            }, (error) => setErrorMessage(t('emergency_error_geolocation')));
+                if(currentValue.geolocation) {
+                    const newValue = {
+                        requestPending: true,
+                        geolocation: {
+                            latitude: position.coords.latitude,
+                            longitude: position.coords.longitude,
+                            accuracy: position.coords.accuracy
+                        }
+                    };
+
+                    getStreetAddressFromGeolocation(position.coords.latitude, position.coords.longitude)
+                        .then((address) => {
+                            updateValue({...newValue, address});
+                            navigate('/alerted');
+                        });
+                }
+            }, (error) => {
+                setLoading(false);
+                setErrorMessage(t('emergency_error_geolocation'))
+            });
         }
     }
 
@@ -61,34 +80,39 @@ const Emergency = () => {
         <React.Fragment>
             <Header hasHeadline hasLangSelector />
             <Content>
-                <Card className={styles.infoContainer}>
-                    <Card className={styles.infoCard}>
-                        <Text>{t('emergency_user_info')}</Text>
-                        <Text className={styles.name}>{currentValue.name}</Text>
-                        <Text className={styles.textSecondary}>{currentValue.phoneNumber}</Text>
+                {loading && <Card className={styles.textCenter}>Loading</Card>}
+
+                {!loading && <>
+                    <Card className={styles.infoContainer}>
+                        <Card className={styles.infoCard}>
+                            <Text>{t('emergency_user_info')}</Text>
+                            <Text className={styles.name}>{currentValue.name}</Text>
+                            <Text className={styles.textSecondary}>{currentValue.phoneNumber}</Text>
+                            <Text className={styles.textSecondary}>{currentValue.addressComment}</Text>
+                        </Card>
+
+                        <Card className={styles.infoEditCard}>
+                            <div className={styles.infoEditIcon} onClick={onEditUserInfo}>
+                                <ImgPencil/>
+                            </div>
+                        </Card>
                     </Card>
 
-                    <Card className={styles.infoEditCard}>
-                        <div className={styles.infoEditIcon} onClick={onEditUserInfo}>
-                            <ImgPencil />
-                        </div>
-                    </Card>
-                </Card>
-
-                <Card className={styles.childContainer}>
+                    <Card className={styles.childContainer}>
                     <Text required>{t('emergency_emergency_label')}</Text>
                     <EmergencyOptions selectedItem={currentValue.emergencyCode} onClick={setEmergencyCode} />
-                </Card>
+                    </Card>
 
-                <Card className={styles.childContainer}>
-                    {errorMessage && <FormErrorText>{errorMessage}</FormErrorText>}
+                    <Card className={styles.childContainer}>
+                {errorMessage && <FormErrorText>{errorMessage}</FormErrorText>}
                     <Button className={styles.sosBtn} onClick={onSendAlert} fullWidth>
-                        <div>
-                            <ImgSOS fill="#FFF" />
-                            <Text>{t('emergency_submit_alert')}</Text>
-                        </div>
+                    <div>
+                    <ImgSOS fill="#FFF" />
+                    <Text>{t('emergency_submit_alert')}</Text>
+                    </div>
                     </Button>
-                </Card>
+                    </Card>
+                </>}
             </Content>
         </React.Fragment>
     );

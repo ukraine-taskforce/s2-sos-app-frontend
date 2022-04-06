@@ -5,12 +5,14 @@ export interface SosInfoI {
   phoneNumber: string | undefined;
   emergencyCode: string;
   name?: string;
+  addressComment?: string;
   address?: string;
   geolocation?: {
     latitude: number,
     longitude: number,
     accuracy: number
   };
+  requestPending: boolean;
 }
 
 export interface SosInfoContextValue {
@@ -21,7 +23,8 @@ export interface SosInfoContextValue {
 
 const defaultValue: SosInfoI = {
   phoneNumber: undefined,
-  emergencyCode: "1"
+  emergencyCode: "1",
+  requestPending: false
 };
 
 const SosInfoContext = React.createContext<SosInfoContextValue>({

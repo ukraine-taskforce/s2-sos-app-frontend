@@ -1,4 +1,10 @@
 {
+    "loading": "Loading",
+    "name": "Name",
+    "location": "Location",
+    "phone_number": "Phone Number",
+    "comment": "Comment",
+    "emergency": "Emergency",
     "home_welcome": "Welcome",
     "home_welcome_text": "SOS App gives refugees quick access to emergency services in Poland.",
     "home_where": "Where do you need assistance?",

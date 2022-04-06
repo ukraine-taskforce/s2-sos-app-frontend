@@ -38,7 +38,7 @@ const Landing = () => {
     }
 
     const setName = (newValue: string) => updateValue({name: newValue});
-    const setAddress = (newValue: string) => updateValue({address: newValue});
+    const setAddressComment = (newValue: string) => updateValue({addressComment: newValue});
 
     return (
         <React.Fragment>
@@ -64,7 +64,7 @@ const Landing = () => {
 
                 <Text>{t('landing_address')}</Text>
                 <Spacer size={10} />
-                <Input value={currentValue.address || ''} label={t('landing_address')} placeholder={t('landing_address_placeholder')} onChange={setAddress} />
+                <Input value={currentValue.addressComment || ''} label={t('landing_address')} placeholder={t('landing_address_placeholder')} onChange={setAddressComment} />
                 <Spacer size={20} />
 
                 <Text className={styles.footerMsg}>{t('landing_footer_msg')}</Text>
