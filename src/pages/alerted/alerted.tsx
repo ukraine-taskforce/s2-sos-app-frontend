@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState, useRef, useCallback }  from 'react';
 import {Header} from "../../others/components/Header";
 import {Content} from "../../others/components/Content";
 import {Spacer} from "../../others/components/Spacer";
@@ -13,7 +13,7 @@ import {useSosInfoContext} from "../../others/contexts/sosInfo";
 
 const Alerted = () => {
     const { t } = useTranslation();
-    const navigate = useNavigate();
+    const navigate = useRef(useNavigate());
 
     const [location, setLocation] = useState<string | undefined>('');
     const [counter, setCounter] = useState(5);
@@ -22,11 +22,11 @@ const Alerted = () => {
 
     const { currentValue, clearStore } = useSosInfoContext();
 
-    const onSubmit = () => {
+    const onSubmit = useCallback(() => {
         console.log('Request submitted', currentValue);
         setSubmitted(true);
         clearStore();
-    }
+    }, [currentValue, clearStore]);
 
     const onCancel = () => {
         console.log('Request canceled', currentValue);
@@ -36,24 +36,25 @@ const Alerted = () => {
 
     // Second Attempts
     useEffect(() => {
-        if(canceled) return;
+        if(canceled || submitted) return;
         if(counter === 0) onSubmit();
 
         const timer = setInterval(() => setCounter(counter - 1), 1000);
         return () => clearInterval(timer);
-    }, [counter]);
+    }, [counter, canceled, submitted, onSubmit]);
 
     useEffect(() => {
-        if(!currentValue || !currentValue.phoneNumber) navigate("/");
+        if (canceled || submitted) return;
+        if(!currentValue || !currentValue.phoneNumber) navigate.current("/");
         setLocation(currentValue.address);
-    }, []);
+    }, [navigate, currentValue, canceled, submitted]);
 
     return (
         <React.Fragment>
             <Header hasHeadline hasLangSelector />
             <Content>
                 <Card className={styles.locationCard}>
-                    <img src={mapImage} className={styles.mapImage} />
+                    <img alt="" src={mapImage} className={styles.mapImage} />
                     <Spacer size={5} />
                     <Text>{location}</Text>
                 </Card>

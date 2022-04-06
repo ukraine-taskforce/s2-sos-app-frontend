@@ -15,12 +15,12 @@ import {useSosInfoContext} from "../../others/contexts/sosInfo";
 import {validatePhoneNumber} from "../../others/helpers/validatePhoneNumber";
 import FormErrorText from "../../others/components/FormErrorText";
 
-interface EmergenciesOptions {
+interface EmergenciesOptionsProps {
     selectedItem: string;
     onClick: (e: string) => void;
 }
 
-const EmergenciesOptions = ({selectedItem, onClick}: EmergenciesOptions) => {
+const EmergenciesOptions = ({selectedItem, onClick}: EmergenciesOptionsProps) => {
     const emergency_codes = ["1", "2", "3"];
     const { t } = useTranslation();
 
