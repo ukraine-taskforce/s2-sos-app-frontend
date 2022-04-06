@@ -24,6 +24,6 @@ jobs:
       - name: Set AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assumerole-to-assume: ${{ secrets.AWS_ROLE_ARN }}
+          role-to-assume: ${{ secrets.AWS_ROLE_ARN }}
           aws-region: eu-central-1
       - run: yarn s3p sync -y -t $S3_URL
