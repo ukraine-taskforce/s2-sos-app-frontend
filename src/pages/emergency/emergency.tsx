@@ -49,6 +49,11 @@ const Emergency = () => {
         if(!currentValue.phoneNumber || !currentValue.name) navigate("/landing");
     }, []);
 
+    const onError = () => {
+        setErrorMessage(t('emergency_error_geolocation'));
+        setLoading(false);
+    }
+
     const onSendAlert = () => {
         setLoading(true);
         if ("geolocation" in navigator) {
@@ -65,14 +70,16 @@ const Emergency = () => {
 
                     getStreetAddressFromGeolocation(position.coords.latitude, position.coords.longitude)
                         .then((address) => {
+                            if(!address) {
+                                onError();
+                                return;
+                            }
+
                             updateValue({...newValue, address});
                             navigate('/alerted');
                         });
                 }
-            }, (error) => {
-                setLoading(false);
-                setErrorMessage(t('emergency_error_geolocation'))
-            });
+            }, (error) => onError());
         }
     }
 
