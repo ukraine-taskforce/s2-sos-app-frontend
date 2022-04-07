@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Header} from "../../others/components/Header";
 import {Content} from "../../others/components/Content";
 import {useTranslation} from "react-i18next";
@@ -33,7 +33,7 @@ const EmergencyOptions = ({selectedItem, onClick}: EmergencyOptionsI) => {
 
 const Emergency = () => {
     const { t } = useTranslation();
-    const navigate = useNavigate();
+    const navigate = useRef(useNavigate());
 
     const { currentValue, updateValue } = useSosInfoContext();
     const [loading, setLoading] = useState(false);
@@ -42,12 +42,12 @@ const Emergency = () => {
     const setEmergencyCode = (newValue: string) => updateValue({emergencyCode: newValue});
 
     const onEditUserInfo = () => {
-        navigate("/landing");
+        navigate.current("/landing");
     }
 
     useEffect(() => {
-        if(!currentValue.phoneNumber || !currentValue.name) navigate("/landing");
-    }, []);
+        if(!currentValue.phoneNumber || !currentValue.name) navigate.current("/landing");
+    }, [navigate, currentValue.phoneNumber, currentValue.name]);
 
     const onError = () => {
         setErrorMessage(t('emergency_error_geolocation'));
@@ -76,7 +76,7 @@ const Emergency = () => {
                             }
 
                             updateValue({...newValue, address});
-                            navigate('/alerted');
+                            navigate.current('/alerted');
                         });
                 }
             }, (error) => onError());

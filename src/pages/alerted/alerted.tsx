@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Header} from "../../others/components/Header";
 import {Content} from "../../others/components/Content";
 import {Spacer} from "../../others/components/Spacer";
@@ -17,14 +17,14 @@ enum PageStatus { COUNT_DOWN, CANCELED, CONFIRMED};
 
 const Alerted = () => {
     const { t } = useTranslation();
-    const navigate = useNavigate();
+    const navigate = useRef(useNavigate());
 
     const [counter, setCounter] = useState(5);
     const [pageStatus, setPageStatus] = useState<PageStatus>(PageStatus.COUNT_DOWN);
 
     const { currentValue, updateValue } = useSosInfoContext();
 
-    const parseBackMessage = () => {
+    const parseBackMessage = useCallback( () => {
         const emergency = currentValue.emergencyCode === '3' ? `${t('emergency_option_1', {lng: 'en'})} and ${t('emergency_option_2', {lng: 'en'})}` : t('emergency_option_' + currentValue.emergencyCode, {lng: 'en'});
         return `${t('name', {lng: 'en'})}: ${currentValue.name}
                 ${t('phone_number', {lng: 'en'})}: ${currentValue.phoneNumber}
@@ -32,13 +32,13 @@ const Alerted = () => {
                 ${t('location', {lng: 'en'})}: ${currentValue.address}
                 ${t('comment', {lng: 'en'})}: ${currentValue.addressComment}
                 `
-    }
+    }, [currentValue.address, currentValue.addressComment, currentValue.emergencyCode, currentValue.name, currentValue.phoneNumber, t]);
 
     const onSubmit = () => {
         console.log('Request submitted to backend: ', parseBackMessage());
         setPageStatus(PageStatus.CONFIRMED);
         updateValue({requestPending: false});
-    }
+    };
 
     const onCancel = () => {
         console.log('Request canceled: ', parseBackMessage());
@@ -52,11 +52,11 @@ const Alerted = () => {
 
         const timer = setInterval(() => setCounter(counter - 1), 1000);
         return () => clearInterval(timer);
-    }, [counter]);
+    }, [counter]); // eslint-disable-line
 
     useEffect(() => {
-        if(!currentValue.requestPending) navigate("/emergency");
-    }, []);
+        if(!currentValue.requestPending) navigate.current("/emergency");
+    }, []); // eslint-disable-line
 
     return (
         <React.Fragment>
