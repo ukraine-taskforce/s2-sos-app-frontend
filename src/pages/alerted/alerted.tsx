@@ -127,3 +127,4 @@ const Alerted = () => {
 };
 
 export default Alerted;
+
