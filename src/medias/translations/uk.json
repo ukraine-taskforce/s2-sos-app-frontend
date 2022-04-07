@@ -54,8 +54,8 @@
     "emergency_user_info": "Ваша інформація",
     "emergency_emergency_label": "Яка у вас екстрена ситуація?",
     "emergency_option_1": "Мені фізично загрожують",
-    "emergency_option_2": "Dispute",
-    "emergency_option_3": "Потрібна швидка допомога",
+    "emergency_option_2": "Мені потрібна швидка допомога",
+    "emergency_option_3": "Oбидві",
     "emergency_submit_alert": "Надішліть допомогу на моє місцезнаходження (GPS)",
     "emergency_error_geolocation": "Please allow the browser to use your location and try again"
 }

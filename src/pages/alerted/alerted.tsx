@@ -25,11 +25,12 @@ const Alerted = () => {
     const { currentValue, updateValue } = useSosInfoContext();
 
     const parseBackMessage = () => {
-        return `${t('name')}: ${currentValue.name}
-                ${t('phone_number')}: ${currentValue.phoneNumber}
-                ${t('emergency')}: ${t('emergency_option_' + currentValue.emergencyCode)}
-                ${t('location')}: ${currentValue.address}
-                ${t('comment')}: ${currentValue.addressComment}
+        const emergency = currentValue.emergencyCode === '3' ? `${t('emergency_option_1', {lng: 'en'})} and ${t('emergency_option_2', {lng: 'en'})}` : t('emergency_option_' + currentValue.emergencyCode, {lng: 'en'});
+        return `${t('name', {lng: 'en'})}: ${currentValue.name}
+                ${t('phone_number', {lng: 'en'})}: ${currentValue.phoneNumber}
+                ${t('emergency', {lng: 'en'})}: ${emergency}
+                ${t('location', {lng: 'en'})}: ${currentValue.address}
+                ${t('comment', {lng: 'en'})}: ${currentValue.addressComment}
                 `
     }
 
