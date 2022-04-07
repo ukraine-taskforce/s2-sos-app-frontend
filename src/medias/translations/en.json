@@ -59,8 +59,8 @@
     "emergency_user_info": "Your Information",
     "emergency_emergency_label": "What is the emergency?",
     "emergency_option_1": "I'm physically threatened",
-    "emergency_option_2": "Dispute",
-    "emergency_option_3": "Need ambulance",
+    "emergency_option_2": "I need an ambulance",
+    "emergency_option_3": "Both",
     "emergency_submit_alert": "Send help to my GPS location",
     "emergency_error_geolocation": "Please allow the browser to use your location and try again"
 }
