@@ -15,6 +15,12 @@ h1 {
     padding-right: 5px;
 }
 
-.requiredField {
-    color: var(--color-red);
+.saveInfoButton {
+    background-color: var(--color-secondary);
+    color: var(--color-white);
+}
+
+.footerMsg {
+    color: var(--color-dark-grey);
+    font-size: 90%;
 }

@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef, useCallback }  from 'react';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Header} from "../../others/components/Header";
 import {Content} from "../../others/components/Content";
 import {Spacer} from "../../others/components/Spacer";
@@ -8,75 +8,120 @@ import {useTranslation} from "react-i18next";
 import styles from "./alerted.module.css";
 import {useNavigate} from "react-router-dom";
 import {Card} from "../../others/components/Card";
-import mapImage from "../../medias/images/MapImage.png";
 import {useSosInfoContext} from "../../others/contexts/sosInfo";
+import {ImgLocationPin} from "../../medias/images/UGT_Asset_UI_LocationPin";
+import {ImgAlertCircle} from "../../medias/images/UGT_Asset_UI_AlertCircle";
+import {ImgAlertRedCircle} from "../../medias/images/UGT_Asset_UI_AlertRedCircle";
+
+enum PageStatus { COUNT_DOWN, CANCELED, CONFIRMED};
 
 const Alerted = () => {
     const { t } = useTranslation();
     const navigate = useRef(useNavigate());
 
-    const [location, setLocation] = useState<string | undefined>('');
     const [counter, setCounter] = useState(5);
-    const [canceled, setCanceled] = useState(false);
-    const [submitted, setSubmitted] = useState(false);
+    const [pageStatus, setPageStatus] = useState<PageStatus>(PageStatus.COUNT_DOWN);
 
-    const { currentValue, clearStore } = useSosInfoContext();
+    const { currentValue, updateValue } = useSosInfoContext();
 
-    const onSubmit = useCallback(() => {
-        console.log('Request submitted', currentValue);
-        setSubmitted(true);
-        clearStore();
-    }, [currentValue, clearStore]);
+    const parseBackMessage = useCallback( () => {
+        const emergency = currentValue.emergencyCode === '3' ? `${t('emergency_option_1', {lng: 'en'})} and ${t('emergency_option_2', {lng: 'en'})}` : t('emergency_option_' + currentValue.emergencyCode, {lng: 'en'});
+        return `${t('name', {lng: 'en'})}: ${currentValue.name}
+                ${t('phone_number', {lng: 'en'})}: ${currentValue.phoneNumber}
+                ${t('emergency', {lng: 'en'})}: ${emergency}
+                ${t('location', {lng: 'en'})}: ${currentValue.address}
+                ${t('comment', {lng: 'en'})}: ${currentValue.addressComment}
+                `
+    }, [currentValue.address, currentValue.addressComment, currentValue.emergencyCode, currentValue.name, currentValue.phoneNumber, t]);
+
+    const onSubmit = () => {
+        console.log('Request submitted to backend: ', parseBackMessage());
+        setPageStatus(PageStatus.CONFIRMED);
+        updateValue({requestPending: false});
+    };
 
     const onCancel = () => {
-        console.log('Request canceled', currentValue);
-        setCanceled(true);
-        clearStore();
+        console.log('Request canceled: ', parseBackMessage());
+        setPageStatus(PageStatus.CANCELED);
+        updateValue({requestPending: false});
     }
 
-    // Second Attempts
     useEffect(() => {
-        if(canceled || submitted) return;
+        if(pageStatus === PageStatus.CANCELED) return;
         if(counter === 0) onSubmit();
 
         const timer = setInterval(() => setCounter(counter - 1), 1000);
         return () => clearInterval(timer);
-    }, [counter, canceled, submitted, onSubmit]);
+    }, [counter]); // eslint-disable-line
 
     useEffect(() => {
-        if (canceled || submitted) return;
-        if(!currentValue || !currentValue.phoneNumber) navigate.current("/");
-        setLocation(currentValue.address);
-    }, [navigate, currentValue, canceled, submitted]);
+        if(!currentValue.requestPending) navigate.current("/emergency");
+    }, []); // eslint-disable-line
 
     return (
         <React.Fragment>
             <Header hasHeadline hasLangSelector />
             <Content>
-                <Card className={styles.locationCard}>
-                    <img alt="" src={mapImage} className={styles.mapImage} />
-                    <Spacer size={5} />
-                    <Text>{location}</Text>
-                </Card>
+                {pageStatus === PageStatus.CONFIRMED ?
+                    <>
+                        <Card>
+                            <Card className={styles.locationCard}>
+                                <ImgLocationPin fill="#000" /><Text>{currentValue.address}</Text>
+                            </Card>
 
-                <Spacer size={20} />
+                            <Spacer size={20} />
 
-                <h1>{t('alerted_title')}</h1>
+                            <Card className={styles.centerH}>
+                                <ImgAlertRedCircle />
+                            </Card>
 
-                <Spacer size={10} />
-                <Text className={styles.text}>{t('alerted_subtitle')}</Text>
-                <Spacer size={20} />
+                            <Card>
+                                <h1>{t('alerted_title_success')}</h1>
+                            </Card>
 
+                            <Card className={styles.textCenter}>
+                                <Text className={styles.text}>{t('alerted_subtitle_success')}</Text>
+                            </Card>
 
-                <div style={{display: "flex", justifyContent: "center"}}>
-                    {!submitted && !canceled &&
-                    <Button className={styles.submitButton} fullWidth onClick={onCancel} >
-                        <Text>{t('alerted_btn')} ({counter})</Text>
-                    </Button>}
+                            <Spacer size={20} />
 
-                    {canceled && <Text className={styles.text}>{t('alerted_canceled')}</Text>}
-                    {submitted && <Text className={styles.text}>{t('alerted_confirmed')}</Text>}
-                </div>
+                            <Card className={styles.textCenter}>
+                                <Text className={styles.text}>{t('alerted_confirmed')}</Text>
+                            </Card>
+                        </Card>
+                    </>
+                :<>
+                    <Card>
+                        <Card className={styles.locationCard}>
+                            <ImgLocationPin fill="#000" /><Text>{currentValue.address}</Text>
+                        </Card>
+
+                        <Spacer size={20} />
+
+                        <Card className={styles.centerH}>
+                            <ImgAlertCircle fill="#FFF" />
+                        </Card>
+
+                        <Card>
+                            <h1>{t('alerted_title')}</h1>
+                        </Card>
+
+                        <Card className={styles.textCenter}>
+                            <Text className={styles.text}>{t('alerted_subtitle')}</Text>
+                        </Card>
+                    </Card>
+
+                    <Spacer size={20} />
+                    <div style={{display: "flex", justifyContent: "center"}}>
+                        {pageStatus === PageStatus.COUNT_DOWN &&
+                        <Button className={styles.submitButton} fullWidth onClick={onCancel} >
+                            <Text>{t('alerted_btn')} ({counter})</Text>
+                        </Button>}
+
+                        {pageStatus === PageStatus.CANCELED && <Text className={styles.text}>{t('alerted_canceled')}</Text>}
+                    </div>
+                </>
+                }
             </Content>
         </React.Fragment>
     );

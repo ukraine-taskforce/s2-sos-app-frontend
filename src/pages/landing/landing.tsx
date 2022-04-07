@@ -8,29 +8,11 @@ import {useTranslation} from "react-i18next";
 import {Input} from "../../others/components/Input";
 import PhoneInput from "../../others/components/PhoneInput";
 import styles from "./landing.module.css";
-import { ImgLocationPin } from '../../medias/images/UGT_Asset_UI_LocationPin';
 import {useNavigate} from "react-router-dom";
-import ToggleButton from "../../others/components/ToggleButton";
 import {useSosInfoContext} from "../../others/contexts/sosInfo";
 import {validatePhoneNumber} from "../../others/helpers/validatePhoneNumber";
 import FormErrorText from "../../others/components/FormErrorText";
-
-interface EmergenciesOptionsProps {
-    selectedItem: string;
-    onClick: (e: string) => void;
-}
-
-const EmergenciesOptions = ({selectedItem, onClick}: EmergenciesOptionsProps) => {
-    const emergency_codes = ["1", "2", "3"];
-    const { t } = useTranslation();
-
-    return <div style={{display: "flex", justifyContent: "space-between", flexWrap: "wrap"}}>
-        {emergency_codes.map(e => <ToggleButton key={e}
-                                                active={e === selectedItem}
-                                                value={t(`landing_emergency_${e}`)}
-                                                onClick={() => onClick(e)} />)}
-    </div>
-}
+import {setSosInfoStorage} from "../../others/storage/sosInfoStorage";
 
 const Landing = () => {
     const { t } = useTranslation();
@@ -38,19 +20,14 @@ const Landing = () => {
 
     const { currentValue, updateValue } = useSosInfoContext();
     const [phoneNumberError, setPhoneNumberError] = useState<string | undefined>();
-    const [errorMessage, setErrorMessage] = useState<string>();
 
-    const onSubmit = () => {
-        if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                setGeoLocation(position.coords.latitude, position.coords.longitude, position.coords.accuracy);
-                navigate('/alerted');
-            }, (error) => setErrorMessage(t('landing_error_geolocation')));
-        }
+    const onSaveInfo = () => {
+        setSosInfoStorage(currentValue);
+        navigate('/emergency');
     }
 
     const isPhoneNumberValid = currentValue.phoneNumber && currentValue.phoneNumber.trim().length > 4 && !phoneNumberError;
-    const isFormValid = isPhoneNumberValid;
+    const isFormValid = isPhoneNumberValid && currentValue.name;
 
     const setPhoneNumber = (newValue: string, countryCode: string) => {
         setPhoneNumberError(undefined);
@@ -60,10 +37,8 @@ const Landing = () => {
         if(validationResult.isInvalid) setPhoneNumberError(validationResult.error);
     }
 
-    const setEmergencyCode = (newValue: string) => updateValue({emergencyCode: newValue});
     const setName = (newValue: string) => updateValue({name: newValue});
-    const setAddress = (newValue: string) => updateValue({address: newValue});
-    const setGeoLocation = (newLatitude: number, newLongitude: number, newAccuracy: number) => updateValue({geolocation: {latitude: newLatitude, longitude: newLongitude, accuracy: newAccuracy}});
+    const setAddressComment = (newValue: string) => updateValue({addressComment: newValue});
 
     return (
         <React.Fragment>
@@ -72,7 +47,7 @@ const Landing = () => {
                 <h1>{t('landing_title')}</h1>
                 <Spacer size={50} />
 
-                <Text>{t('phone_number')} <span className={styles.requiredField}>*</span></Text>
+                <Text required>{t('phone_number')}</Text>
                 <Spacer size={10} />
                 <PhoneInput country={'ua'}
                             value={currentValue.phoneNumber}
@@ -82,29 +57,22 @@ const Landing = () => {
                 {phoneNumberError && <FormErrorText>{t(`landing_phoneNumber_${phoneNumberError}`)}</FormErrorText>}
                 <Spacer size={30} />
 
-                <Text>{t('landing_emergency_label')}</Text>
-                <Spacer size={10} />
-                <EmergenciesOptions selectedItem={currentValue.emergencyCode} onClick={setEmergencyCode} />
-                <Spacer size={35} />
-
-                <Text>{t('landing_name')}</Text>
+                <Text required>{t('landing_name')}</Text>
                 <Spacer size={10} />
                 <Input value={currentValue.name || ''} label={t('landing_name')} placeholder={t('landing_name_placeholder')} onChange={setName} />
                 <Spacer size={35} />
 
                 <Text>{t('landing_address')}</Text>
                 <Spacer size={10} />
-                <Input value={currentValue.address || ''} label={t('landing_address')} placeholder={t('landing_address_placeholder')} onChange={setAddress} />
+                <Input value={currentValue.addressComment || ''} label={t('landing_address')} placeholder={t('landing_address_placeholder')} onChange={setAddressComment} />
                 <Spacer size={20} />
 
-                <Button className={styles.submitButton} fullWidth onClick={onSubmit} disabled={!isFormValid}>
-                    <div>
-                        <ImgLocationPin fill='var(--color-white)' />
-                        <Text>{t('landing_submit_btn')}</Text>
-                    </div>
-                </Button>
+                <Text className={styles.footerMsg}>{t('landing_footer_msg')}</Text>
+                <Spacer size={20} />
 
-                {errorMessage && <FormErrorText>{errorMessage}</FormErrorText>}
+                <Button className={styles.saveInfoButton} fullWidth onClick={onSaveInfo} disabled={!isFormValid}>
+                    <Text>{t('landing_save_info_btn')}</Text>
+                </Button>
             </Content>
         </React.Fragment>
     );

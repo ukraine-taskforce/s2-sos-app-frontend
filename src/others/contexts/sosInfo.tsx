@@ -1,15 +1,18 @@
 import React from "react";
+import {getSosInfoStorage} from "../storage/sosInfoStorage";
 
 export interface SosInfoI {
   phoneNumber: string | undefined;
   emergencyCode: string;
   name?: string;
+  addressComment?: string;
   address?: string;
   geolocation?: {
     latitude: number,
     longitude: number,
     accuracy: number
   };
+  requestPending: boolean;
 }
 
 export interface SosInfoContextValue {
@@ -20,7 +23,8 @@ export interface SosInfoContextValue {
 
 const defaultValue: SosInfoI = {
   phoneNumber: undefined,
-  emergencyCode: "1"
+  emergencyCode: "1",
+  requestPending: false
 };
 
 const SosInfoContext = React.createContext<SosInfoContextValue>({
@@ -34,7 +38,12 @@ export function useSosInfoContext() {
 }
 
 export const SosInfoContextProvider: React.FunctionComponent = ({ children }) => {
-  const [currentValue, setCurrentValue] = React.useState<SosInfoI>(defaultValue);
+  const [currentValue, setCurrentValue] = React.useState<SosInfoI>(() => {
+    const localStorageInfo = getSosInfoStorage();
+    if(localStorageInfo) return localStorageInfo;
+
+    return defaultValue;
+  });
 
   const updateValue = React.useCallback(
     (values: { [x: string]: any }) => {
