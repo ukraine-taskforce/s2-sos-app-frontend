@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/bootstrap.css';
 import styles from "./PhoneInput.module.css";
@@ -25,9 +25,14 @@ const ClearButton: React.FunctionComponent<ClearButtonProps> = ({onClick}) => {
 
 const PhoneInputCustom: React.FunctionComponent<PhoneInputProps> = ({country, value, placeholder, onChange, isValid = true}) => {
     const { t } = useTranslation();
+    const [ focused, setFocused ] = useState(false);
+
+    const onFocus = () => { setFocused(true); };
+    const onBlur = () => { setFocused(false); };
+
     const countriesListTranslation = JSON.parse(t('landing_phone_input'));
 
-    return <div className={`${styles.wrapper} ${!isValid && styles.invalid}`}>
+    return <div className={`${styles.wrapper} ${!isValid && styles.invalid} ${focused && styles.focused}`}>
             <PhoneInput country={country}
                                value={value}
                                placeholder={placeholder}
@@ -37,6 +42,8 @@ const PhoneInputCustom: React.FunctionComponent<PhoneInputProps> = ({country, va
                                buttonClass={styles.button}
                                dropdownClass={styles.button}
                                localization={countriesListTranslation}
+                               onFocus={onFocus}
+                               onBlur={onBlur}
                                enableSearch />
 
         {value && value.length > 0 && <ClearButton onClick={() => onChange('', '')} />}
