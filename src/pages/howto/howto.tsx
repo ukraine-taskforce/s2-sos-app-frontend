@@ -31,10 +31,9 @@ export function Howto() {
             <Content>
                 {displayStep === 0 && (
                     <>
-                        <ImgTutorialStart
-                            alt='start'
-                            className={styles.tutorialImg}
-                        />
+                        <div className={styles.tutorialImg}>
+                            <ImgTutorialStart alt='start' />
+                        </div>
                         <Text alignment='center' className={styles.textB}>
                             <Markdown>{t('howto_text_0')}</Markdown>
                         </Text>
@@ -52,10 +51,9 @@ export function Howto() {
                 )}
                 {displayStep === 1 && (
                     <>
-                        <ImgTutorialFirst
-                            alt='submit'
-                            className={styles.tutorialImg}
-                        />
+                        <div className={styles.tutorialImg}>
+                            <ImgTutorialFirst alt='submit' />
+                        </div>
                         <Text alignment='center' className={styles.text}>
                             <Markdown>{t('howto_text_1_1')}</Markdown>
                             <Markdown>{t('howto_text_1_2')}</Markdown>
@@ -82,10 +80,9 @@ export function Howto() {
                 )}
                 {displayStep > 1 && (
                     <>
-                        <ImgTutorialSecond
-                            alt='alarm'
-                            className={styles.tutorialImg}
-                        />
+                        <div className={styles.tutorialImg}>
+                            <ImgTutorialSecond alt='alarm' />
+                        </div>
                         <Text alignment='center' className={styles.text}>
                             <Markdown>{t('howto_text_2')}</Markdown>
                         </Text>
