@@ -1,5 +1,5 @@
 import React from "react";
-import PhoneInput from 'react-phone-input-2'
+import PhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/bootstrap.css';
 import styles from "./PhoneInput.module.css";
 import {ImgClose} from "../../medias/images/UGT_Asset_UI_Close";
