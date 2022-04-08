@@ -8,6 +8,7 @@ import { Header } from '../../others/components/Header';
 import { Text } from '../../others/components/Text';
 import { Content } from '../../others/components/Content';
 import Checkbox from '../../others/components/Checkbox';
+import { ImgTutorialStart } from '../../medias/images/UGT_Asset_tutorial_0';
 import { ImgNext } from '../../medias/images/UGT_Asset_UI_ButtonNext';
 
 import styles from './howto.module.css';
@@ -26,7 +27,13 @@ export function Howto() {
             <Header hasHeadline hasLangSelector />
             <Content>
                 <div>
-                    <div className={styles.imgPlaceholder}></div>
+                    {displayStep === 0 && (
+                        <ImgTutorialStart
+                            alt='start'
+                            className={styles.tutorialImg}
+                        />
+                    )}
+
                     <div>
                         {displayStep === 0 && (
                             <Text alignment='center' className={styles.textB}>
