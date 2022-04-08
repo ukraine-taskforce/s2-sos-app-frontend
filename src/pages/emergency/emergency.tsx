@@ -54,32 +54,37 @@ const Emergency = () => {
         setLoading(false);
     }
 
+    const handlePosition = (position: GeolocationPosition) => {
+        if(currentValue.geolocation) {
+            const newValue = {
+                requestPending: true,
+                geolocation: {
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                    accuracy: position.coords.accuracy
+                }
+            };
+
+            getStreetAddressFromGeolocation(position.coords.latitude, position.coords.longitude)
+                .then((address) => {
+                    if(!address) {
+                        onError();
+                        return;
+                    }
+
+                    updateValue({...newValue, address});
+                    navigate.current('/alerted');
+                });
+        }
+    }
+
     const onSendAlert = () => {
         setLoading(true);
         if ("geolocation" in navigator) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                if(currentValue.geolocation) {
-                    const newValue = {
-                        requestPending: true,
-                        geolocation: {
-                            latitude: position.coords.latitude,
-                            longitude: position.coords.longitude,
-                            accuracy: position.coords.accuracy
-                        }
-                    };
-
-                    getStreetAddressFromGeolocation(position.coords.latitude, position.coords.longitude)
-                        .then((address) => {
-                            if(!address) {
-                                onError();
-                                return;
-                            }
-
-                            updateValue({...newValue, address});
-                            navigate.current('/alerted');
-                        });
-                }
-            }, (error) => onError());
+            navigator.geolocation.getCurrentPosition(
+                handlePosition,
+                (error) => onError(),
+                {enableHighAccuracy: true});
         }
     }
 
