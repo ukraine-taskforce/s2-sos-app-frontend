@@ -3,17 +3,6 @@
     height: 70px;
 }
 
-.imgPlaceholder {
-    width: 213px;
-    height: 233px;
-    background: #eaeaea;
-    border-radius: 23px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 50px;
-}
-
 .textB {
     font-size: 18px;
     line-height: 24px;
@@ -47,6 +36,10 @@
     line-height: 18px;
     color: var(--color-dark-grey);
     margin-bottom: 17px;
+}
+
+.tutorialImg {
+    text-align: center;
 }
 
 
