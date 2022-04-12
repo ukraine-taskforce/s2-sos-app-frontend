@@ -1,4 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react';
+import ReactGA from "react-ga4";
 import {Header} from "../../others/components/Header";
 import {Content} from "../../others/components/Content";
 import {useTranslation} from "react-i18next";
@@ -40,6 +41,12 @@ const Emergency = () => {
     const [errorMessage, setErrorMessage] = useState<string>();
 
     const setEmergencyCode = (newValue: string) => updateValue({emergencyCode: newValue});
+
+    useEffect(() => {
+      document.title = t("emergency_page_title");
+      ReactGA.initialize(process.env.REACT_APP_GA4_ID as string);
+      ReactGA.send("pageview");
+    }, [t]);
 
     const onEditUserInfo = () => {
         navigate.current("/landing");

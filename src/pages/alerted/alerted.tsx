@@ -1,4 +1,5 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
+import ReactGA from "react-ga4";
 import {Header} from "../../others/components/Header";
 import {Content} from "../../others/components/Content";
 import {Spacer} from "../../others/components/Spacer";
@@ -23,6 +24,12 @@ const Alerted = () => {
     const [pageStatus, setPageStatus] = useState<PageStatus>(PageStatus.COUNT_DOWN);
 
     const { currentValue, updateValue } = useSosInfoContext();
+
+    useEffect(() => {
+      document.title = t("alerted_page_title");
+      ReactGA.initialize(process.env.REACT_APP_GA4_ID as string);
+      ReactGA.send("pageview");
+    }, [t]);
 
     const parseBackMessage = useCallback( () => {
         const emergency = currentValue.emergencyCode === '3' ? `${t('emergency_option_1', {lng: 'en'})} and ${t('emergency_option_2', {lng: 'en'})}` : t('emergency_option_' + currentValue.emergencyCode, {lng: 'en'});

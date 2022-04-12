@@ -57,5 +57,10 @@
     "emergency_option_2": "Мені потрібна швидка допомога",
     "emergency_option_3": "Oбидві",
     "emergency_submit_alert": "Надішліть допомогу на моє місцезнаходження (GPS)",
-    "emergency_error_geolocation": "Please allow the browser to use your location and try again"
+    "emergency_error_geolocation": "Please allow the browser to use your location and try again",
+    "howto_page_title": "SOS додаток Сильніші: Налаштування крок - ",
+    "landing_page_title": "SOS додаток Сильніші: Персональна інформація",
+    "emergency_page_title": "SOS додаток Сильніші: Надзвичайна ситуація",
+    "alerted_page_title": "SOS додаток Сильніші: Сповіщення",
+    "notfound_page_title": "SOS додаток Сильніші: Сторінка не знайдена"
 }
