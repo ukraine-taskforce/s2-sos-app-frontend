@@ -55,3 +55,9 @@
     align-items: center;
     height: 100%;
 }
+
+.additionalInfoCard {
+    display: flex;
+    flex-direction: column;
+    padding-top: 10px;
+}

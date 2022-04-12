@@ -107,7 +107,11 @@ const Emergency = () => {
                             <Text>{t('emergency_user_info')}</Text>
                             <Text className={styles.name}>{currentValue.name}</Text>
                             <Text className={styles.textSecondary}>{currentValue.phoneNumber}</Text>
-                            <Text className={styles.textSecondary}>{currentValue.addressComment}</Text>
+
+                            <Card className={styles.additionalInfoCard}>
+                                <Text>{t('emergency_additional_info')}</Text>
+                                <Text className={styles.textSecondary}>{currentValue.addressComment}</Text>
+                            </Card>
                         </Card>
 
                         <Card className={styles.infoEditCard}>
@@ -118,8 +122,8 @@ const Emergency = () => {
                     </Card>
 
                     <Card className={styles.childContainer}>
-                    <Text required>{t('emergency_emergency_label')}</Text>
-                    <EmergencyOptions selectedItem={currentValue.emergencyCode} onClick={setEmergencyCode} />
+                        <Text required>{t('emergency_emergency_label')}</Text>
+                        <EmergencyOptions selectedItem={currentValue.emergencyCode} onClick={setEmergencyCode} />
                     </Card>
 
                     <Card className={styles.childContainer}>

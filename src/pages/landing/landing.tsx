@@ -33,6 +33,10 @@ const Landing = () => {
         navigate('/emergency');
     }
 
+    useEffect(() => {
+        if(!currentValue.termsAccepted) navigate('/');
+    }, [currentValue.termsAccepted, navigate]);
+
     const isPhoneNumberValid = currentValue.phoneNumber && currentValue.phoneNumber.trim().length > 4 && !phoneNumberError;
     const isFormValid = isPhoneNumberValid && currentValue.name;
 
