@@ -108,10 +108,12 @@ const Emergency = () => {
                             <Text className={styles.name}>{currentValue.name}</Text>
                             <Text className={styles.textSecondary}>{currentValue.phoneNumber}</Text>
 
+                            { currentValue.addressComment?.trim() &&
                             <Card className={styles.additionalInfoCard}>
                                 <Text>{t('emergency_additional_info')}</Text>
                                 <Text className={styles.textSecondary}>{currentValue.addressComment}</Text>
                             </Card>
+                            }
                         </Card>
 
                         <Card className={styles.infoEditCard}>
