@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Header} from "../../others/components/Header";
 import {Content} from "../../others/components/Content";
 import {Spacer} from "../../others/components/Spacer";
@@ -25,6 +25,10 @@ const Landing = () => {
         setSosInfoStorage(currentValue);
         navigate('/emergency');
     }
+
+    useEffect(() => {
+        if(!currentValue.termsAccepted) navigate('/');
+    }, [currentValue.termsAccepted, navigate]);
 
     const isPhoneNumberValid = currentValue.phoneNumber && currentValue.phoneNumber.trim().length > 4 && !phoneNumberError;
     const isFormValid = isPhoneNumberValid && currentValue.name;

@@ -12,6 +12,7 @@ import {useSosInfoContext} from "../../others/contexts/sosInfo";
 import {ImgLocationPin} from "../../medias/images/UGT_Asset_UI_LocationPin";
 import {ImgAlertCircle} from "../../medias/images/UGT_Asset_UI_AlertCircle";
 import {ImgAlertRedCircle} from "../../medias/images/UGT_Asset_UI_AlertRedCircle";
+import {postToApi} from "../../others/api/api";
 
 enum PageStatus { COUNT_DOWN, CANCELED, CONFIRMED};
 
@@ -20,6 +21,7 @@ const Alerted = () => {
     const navigate = useRef(useNavigate());
 
     const [counter, setCounter] = useState(5);
+    const [errorMessage, setErrorMessage] = useState<string>();
     const [pageStatus, setPageStatus] = useState<PageStatus>(PageStatus.COUNT_DOWN);
 
     const { currentValue, updateValue } = useSosInfoContext();
@@ -34,16 +36,29 @@ const Alerted = () => {
                 `
     }, [currentValue.address, currentValue.addressComment, currentValue.emergencyCode, currentValue.name, currentValue.phoneNumber, t]);
 
-    const onSubmit = () => {
-        console.log('Request submitted to backend: ', parseBackMessage());
-        setPageStatus(PageStatus.CONFIRMED);
+    const onSubmit = async () => {
+        try {
+            await postToApi({
+                Message: parseBackMessage(),
+                PhoneNumber: currentValue.phoneNumber
+            });
+
+            setPageStatus(PageStatus.CONFIRMED);
+        } catch(error) {
+            setErrorMessage(t('alerted_errorMessage'));
+            onCancel();
+        }
+
         updateValue({requestPending: false});
     };
 
     const onCancel = () => {
-        console.log('Request canceled: ', parseBackMessage());
         setPageStatus(PageStatus.CANCELED);
         updateValue({requestPending: false});
+
+        setTimeout(() => {
+            navigate.current("/emergency");
+        }, 5000);
     }
 
     useEffect(() => {
@@ -66,7 +81,10 @@ const Alerted = () => {
                     <>
                         <Card>
                             <Card className={styles.locationCard}>
-                                <ImgLocationPin fill="#000" /><Text>{currentValue.address}</Text>
+                                <Card>
+                                    <ImgLocationPin fill="#000" />
+                                </Card>
+                                <Text alignment="center">{currentValue.address}</Text>
                             </Card>
 
                             <Spacer size={20} />
@@ -93,7 +111,10 @@ const Alerted = () => {
                 :<>
                     <Card>
                         <Card className={styles.locationCard}>
-                            <ImgLocationPin fill="#000" /><Text>{currentValue.address}</Text>
+                            <Card>
+                                <ImgLocationPin fill="#000" />
+                            </Card>
+                            <Text alignment="center">{currentValue.address}</Text>
                         </Card>
 
                         <Spacer size={20} />
@@ -118,7 +139,10 @@ const Alerted = () => {
                             <Text>{t('alerted_btn')} ({counter})</Text>
                         </Button>}
 
-                        {pageStatus === PageStatus.CANCELED && <Text className={styles.text}>{t('alerted_canceled')}</Text>}
+                        {pageStatus === PageStatus.CANCELED && <div className={styles.footerCenterMessage}>
+                            {errorMessage && <><Text className={styles.errorText}>{errorMessage}</Text><Spacer size={5} /></>}
+                            <Text className={styles.text}>{t('alerted_canceled')}</Text>
+                        </div>}
                     </div>
                 </>
                 }

@@ -13,6 +13,7 @@ export interface SosInfoI {
     accuracy: number
   };
   requestPending: boolean;
+  termsAccepted: boolean;
 }
 
 export interface SosInfoContextValue {
@@ -24,7 +25,8 @@ export interface SosInfoContextValue {
 const defaultValue: SosInfoI = {
   phoneNumber: undefined,
   emergencyCode: "1",
-  requestPending: false
+  requestPending: false,
+  termsAccepted: false,
 };
 
 const SosInfoContext = React.createContext<SosInfoContextValue>({

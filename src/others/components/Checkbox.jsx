@@ -1,14 +1,10 @@
 import styles from './Checkbox.module.css';
 
-import { useState } from 'react';
-
 const Checkbox = ({ id, value, handleChange }) => {
-    const [checked, setChecked] = useState(false);
-
     const onChange = () => {
-        setChecked(!checked);
         handleChange();
     };
+
     return (
         <div>
             <input
@@ -20,7 +16,7 @@ const Checkbox = ({ id, value, handleChange }) => {
             <label htmlFor={id}>
                 <svg
                     className={
-                        checked ? styles.checkboxActive : styles.checkbox
+                        value ? styles.checkboxActive : styles.checkbox
                     }
                     aria-hidden='true'
                     viewBox='0 0 20 11'
@@ -29,7 +25,7 @@ const Checkbox = ({ id, value, handleChange }) => {
                     <path
                         d='M1 4.5L5 9L14 1'
                         strokeWidth='2'
-                        stroke={checked ? '#fff' : 'none'}
+                        stroke={value ? '#fff' : 'none'}
                     />
                 </svg>
             </label>
