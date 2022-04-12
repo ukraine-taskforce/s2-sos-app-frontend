@@ -39,5 +39,10 @@
     "emergency_option_2": "I need an ambulance",
     "emergency_option_3": "Both",
     "emergency_submit_alert": "Send help to my GPS location",
-    "emergency_error_geolocation": "Please allow the browser to use your location and try again"
+    "emergency_error_geolocation": "Please allow the browser to use your location and try again",
+    "howto_page_title": "Sylnishi SOS-app: Setup step - ",
+    "landing_page_title": "Sylnishi SOS-app: Personal information",
+    "emergency_page_title": "Sylnishi SOS-app: Emergency",
+    "alerted_page_title": "Sylnishi SOS-app: Alert",
+    "notfound_page_title": "Sylnishi SOS-app: Page not found"
 }
