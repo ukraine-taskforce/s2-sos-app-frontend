@@ -1,4 +1,5 @@
-import React, {useEffect, useState} from 'react';
+import React, { useState, useEffect } from 'react';
+import ReactGA from "react-ga4";
 import {Header} from "../../others/components/Header";
 import {Content} from "../../others/components/Content";
 import {Spacer} from "../../others/components/Spacer";
@@ -20,6 +21,12 @@ const Landing = () => {
 
     const { currentValue, updateValue } = useSosInfoContext();
     const [phoneNumberError, setPhoneNumberError] = useState<string | undefined>();
+
+    useEffect(() => {
+      document.title = t("landing_page_title")
+      ReactGA.initialize(process.env.REACT_APP_GA4_ID as string);
+      ReactGA.send("pageview");
+    }, [t]);
 
     const onSaveInfo = () => {
         setSosInfoStorage(currentValue);

@@ -2,6 +2,7 @@ import React, {useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import Markdown from 'react-markdown';
+import ReactGA from "react-ga4";
 
 import { Button } from '../../others/components/Button';
 import { Header } from '../../others/components/Header';
@@ -31,6 +32,12 @@ export function Howto() {
     useEffect(() => {
         if(currentValue.termsAccepted) navigate('/emergency');
     }, []); // eslint-disable-line
+
+    useEffect(() => {
+      document.title = t("howto_page_title") + (displayStep + 1);
+      ReactGA.initialize(process.env.REACT_APP_GA4_ID as string);
+      ReactGA.send("pageview");
+    }, [displayStep, t]);
 
     return (
         <React.Fragment>
