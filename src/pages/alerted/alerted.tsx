@@ -43,7 +43,7 @@ const Alerted = () => {
                 ${t('location_accuracy', {lng: 'en'})}: ${Math.floor(currentValue.geolocation!.accuracy)} m
                 ${t('comment', {lng: 'en'})}: ${currentValue.addressComment}
                 `
-    }, [currentValue.address, currentValue.addressComment, currentValue.emergencyCode, currentValue.name, currentValue.phoneNumber, t]);
+    }, [currentValue.address, currentValue.addressComment, currentValue.emergencyCode, currentValue.geolocation, currentValue.name, currentValue.phoneNumber, t]);
 
     const onSubmit = async () => {
         try {
