@@ -38,10 +38,12 @@ const Alerted = () => {
         return `${t('name', {lng: 'en'})}: ${currentValue.name}
                 ${t('phone_number', {lng: 'en'})}: ${currentValue.phoneNumber}
                 ${t('emergency', {lng: 'en'})}: ${emergency}
-                ${t('location', {lng: 'en'})}: ${currentValue.address}
+                ${t('address', {lng: 'en'})}: ${currentValue.address}
+                ${t('location', {lng: 'en'})}: ${currentValue.geolocation!.latitude}, ${currentValue.geolocation!.longitude}
+                ${t('location_accuracy', {lng: 'en'})}: ${Math.floor(currentValue.geolocation!.accuracy)} m
                 ${t('comment', {lng: 'en'})}: ${currentValue.addressComment}
                 `
-    }, [currentValue.address, currentValue.addressComment, currentValue.emergencyCode, currentValue.name, currentValue.phoneNumber, t]);
+    }, [currentValue.address, currentValue.addressComment, currentValue.emergencyCode, currentValue.geolocation, currentValue.name, currentValue.phoneNumber, t]);
 
     const onSubmit = async () => {
         try {
