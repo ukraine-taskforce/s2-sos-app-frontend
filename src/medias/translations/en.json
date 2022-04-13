@@ -1,6 +1,8 @@
 {
     "name": "Name",
+    "address": "Address",
     "location": "Location",
+    "location_accuracy": "Location accuracy",
     "phone_number": "Phone Number",
     "comment": "Comment",
     "emergency": "Emergency",
