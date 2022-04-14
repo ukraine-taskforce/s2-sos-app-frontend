@@ -71,10 +71,12 @@ const Emergency = () => {
                     accuracy: position.coords.accuracy
                 }
             };
+            ReactGA.event({category: 'location', action: 'gpsAccuracyMeters', value: position.coords.accuracy});
 
             getStreetAddressFromGeolocation(position.coords.latitude, position.coords.longitude)
                 .then((address) => {
                     if(!address) {
+                        ReactGA.event({category: 'error', action: 'getAddressError'});
                         onError();
                         return;
                     }
@@ -87,11 +89,17 @@ const Emergency = () => {
 
     const onSendAlert = () => {
         setLoading(true);
+        ReactGA.event({category: 'user', action: 'submitted'});
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(
                 handlePosition,
-                (error) => onError(),
+                (error) => {
+                    ReactGA.event({category: 'error', action: 'geoLocationError'});
+                    onError();
+                },
                 {enableHighAccuracy: true});
+        } else {
+            ReactGA.event({category: 'error', action: 'geoLocationMissing'});
         }
     }
 

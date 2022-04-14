@@ -53,21 +53,28 @@ const Alerted = () => {
             });
 
             setPageStatus(PageStatus.CONFIRMED);
+            ReactGA.event({category: 'apiCall', action: 'succeeded'});
         } catch(error) {
             setErrorMessage(t('alerted_errorMessage'));
-            onCancel();
+            ReactGA.event({category: 'apiCall', action: 'failed'});
+            goBack();
         }
 
         updateValue({requestPending: false});
     };
 
-    const onCancel = () => {
+    const goBack = () => {
         setPageStatus(PageStatus.CANCELED);
         updateValue({requestPending: false});
 
         setTimeout(() => {
             navigate.current("/emergency");
         }, 5000);
+    }
+
+    const onCancel = () => {
+        ReactGA.event({category: 'user', action: 'cancelled'});
+        goBack();
     }
 
     useEffect(() => {
