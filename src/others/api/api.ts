@@ -9,8 +9,7 @@ export const postToApi = async (body: object) => {
             .then((res) => {
                 if (!res.ok) throw new Error(res.statusText);
                 return res;
-            })
-            .then((res) => res.json());
+            });
         return result;
     } catch (error) {
         throw error;
