@@ -35,22 +35,18 @@ const Alerted = () => {
 
     const parseBackMessage = useCallback( () => {
         const emergency = currentValue.emergencyCode === '3' ? `${t('emergency_option_1', {lng: 'en'})} and ${t('emergency_option_2', {lng: 'en'})}` : t('emergency_option_' + currentValue.emergencyCode, {lng: 'en'});
-        return `${t('name', {lng: 'en'})}: ${currentValue.name}
-                ${t('phone_number', {lng: 'en'})}: ${currentValue.phoneNumber}
-                ${t('emergency', {lng: 'en'})}: ${emergency}
-                ${t('address', {lng: 'en'})}: ${currentValue.address}
-                ${t('location', {lng: 'en'})}: ${currentValue.geolocation!.latitude}, ${currentValue.geolocation!.longitude}
-                ${t('location_accuracy', {lng: 'en'})}: ${Math.floor(currentValue.geolocation!.accuracy)} m
-                ${t('comment', {lng: 'en'})}: ${currentValue.addressComment}
-                `
+        return `${t('name', {lng: 'en'})}: ${currentValue.name}%0A
+${t('phone_number', {lng: 'en'})}: ${currentValue.phoneNumber}%0A
+${t('emergency', {lng: 'en'})}: ${emergency}%0A
+${t('address', {lng: 'en'})}: ${currentValue.address}%0A
+${t('location', {lng: 'en'})}: ${currentValue.geolocation!.latitude}, ${currentValue.geolocation!.longitude}%0A
+${t('location_accuracy', {lng: 'en'})}: ${Math.floor(currentValue.geolocation!.accuracy)} m%0A
+${t('comment', {lng: 'en'})}: ${currentValue.addressComment}`
     }, [currentValue.address, currentValue.addressComment, currentValue.emergencyCode, currentValue.geolocation, currentValue.name, currentValue.phoneNumber, t]);
 
     const onSubmit = async () => {
         try {
-            await postToApi({
-                Message: parseBackMessage(),
-                PhoneNumber: currentValue.phoneNumber
-            });
+            await postToApi(parseBackMessage());
 
             setPageStatus(PageStatus.CONFIRMED);
             ReactGA.event({category: 'apiCall', action: 'succeeded'});
