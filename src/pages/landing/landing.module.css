@@ -18,9 +18,15 @@ h1 {
 .saveInfoButton {
     background-color: var(--color-secondary);
     color: var(--color-white);
+    margin-bottom: 20px;
 }
 
 .footerMsg {
-    color: var(--color-dark-grey);
-    font-size: 90%;
+    /* color: var(--color-dark-grey); */
+    font-size: 100%;
+}
+
+.title {
+    color: var(--color-secondary);
+    font-size: 150%;
 }

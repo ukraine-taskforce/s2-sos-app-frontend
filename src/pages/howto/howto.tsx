@@ -70,7 +70,6 @@ export function Howto() {
                         </div>
                         <Text alignment='center' className={styles.text}>
                             <Markdown>{t('howto_text_1_1')}</Markdown>
-                            <Markdown>{t('howto_text_1_2')}</Markdown>
                         </Text>
 
                         <div>
