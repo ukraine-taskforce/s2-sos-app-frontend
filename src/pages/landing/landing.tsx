@@ -55,7 +55,7 @@ const Landing = () => {
         <React.Fragment>
             <Header hasHeadline hasLangSelector />
             <Content>
-                <h1>{t('landing_title')}</h1>
+                <Text className={styles.title}>{t('landing_title')}</Text>
                 <Spacer size={50} />
 
                 <Text required>{t('phone_number')}</Text>
@@ -78,7 +78,7 @@ const Landing = () => {
                 <Input value={currentValue.addressComment || ''} label={t('landing_address')} placeholder={t('landing_address_placeholder')} onChange={setAddressComment} />
                 <Spacer size={20} />
 
-                <Text className={styles.footerMsg}>{t('landing_footer_msg')}</Text>
+                <Text className={styles.footerMsg}>&#128161; {t('landing_footer_msg')}</Text>
                 <Spacer size={20} />
 
                 <Button className={styles.saveInfoButton} fullWidth onClick={onSaveInfo} disabled={!isFormValid}>
