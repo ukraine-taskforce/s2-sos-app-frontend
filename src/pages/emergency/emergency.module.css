@@ -33,7 +33,6 @@
 .sosBtn {
     background-color: var(--color-red);
     color: var(--color-white);
-    height: 150px;
     position: sticky;
     bottom: 0px;
     margin-bottom: 20px;
