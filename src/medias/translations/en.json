@@ -49,5 +49,10 @@
     "landing_page_title": "Sylnishi SOS-app: Personal information",
     "emergency_page_title": "Sylnishi SOS-app: Emergency",
     "alerted_page_title": "Sylnishi SOS-app: Alert",
-    "notfound_page_title": "Sylnishi SOS-app: Page not found"
+    "notfound_page_title": "Sylnishi SOS-app: Page not found",
+    "your_address": "Your address",
+    "accuracy": "accuracy",
+    "confirm_location_title": "Confirm your location",
+    "your_detected_location": "GPS location",
+    "your_address_placeholder": "Your current address"
 }

@@ -42,5 +42,10 @@
     "landing_page_title": "SOS-додаток \"Сильніші\": Персональна інформація",
     "emergency_page_title": "SOS-додаток \"Сильніші\": Надзвичайна ситуація",
     "alerted_page_title": "SOS-додаток \"Сильніші\": Сповіщення",
-    "notfound_page_title": "SOS-додаток \"Сильніші\": Сторінка не знайдена"
+    "notfound_page_title": "SOS-додаток \"Сильніші\": Сторінка не знайдена",
+    "your_address": "Ваша адреса",
+    "accuracy": "точність",
+    "confirm_location_title": "Підтвердьте своє місцезнаходження",
+    "your_detected_location": "Місцезнаходження (GPS)",
+    "your_address_placeholder": "Ваша адреса в даний момент"
 }
