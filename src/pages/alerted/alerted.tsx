@@ -21,7 +21,7 @@ const Alerted = () => {
     const { t } = useTranslation();
     const navigate = useRef(useNavigate());
 
-    const [counter, setCounter] = useState(5);
+    const [counter, setCounter] = useState(0);
     const [errorMessage, setErrorMessage] = useState<string>();
     const [pageStatus, setPageStatus] = useState<PageStatus>(PageStatus.COUNT_DOWN);
 

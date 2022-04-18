@@ -61,3 +61,8 @@
     flex-direction: column;
     padding-top: 10px;
 }
+
+.title {
+    color: var(--color-secondary);
+    font-size: 150%;
+}

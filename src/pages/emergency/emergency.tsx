@@ -14,6 +14,9 @@ import {ImgPencil} from "../../medias/images/UGT_Asset_UI_Pencil";
 import {ImgSOS} from "../../medias/images/UGT_Asset_UI_SOS";
 import FormErrorText from "../../others/components/FormErrorText";
 import {getStreetAddressFromGeolocation} from "../../others/helpers/googleMapsApi";
+import {Input} from "../../others/components/Input";
+import { Spacer } from "../../others/components/Spacer";
+import { Map } from "../../others/components/Map";
 
 interface EmergencyOptionsI {
     selectedItem: string;
@@ -35,12 +38,14 @@ const EmergencyOptions = ({selectedItem, onClick}: EmergencyOptionsI) => {
 const Emergency = () => {
     const { t } = useTranslation();
     const navigate = useRef(useNavigate());
+    const [displayStep, setDisplayStep] = React.useState(0);
 
     const { currentValue, updateValue } = useSosInfoContext();
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState<string>();
 
     const setEmergencyCode = (newValue: string) => updateValue({emergencyCode: newValue});
+    const setAddress = (newValue: string) => updateValue({address: newValue});
 
     useEffect(() => {
       document.title = t("emergency_page_title");
@@ -82,14 +87,18 @@ const Emergency = () => {
                     }
 
                     updateValue({...newValue, address});
-                    navigate.current('/alerted');
+                    //navigate.current('/alerted');
+                    setDisplayStep(1);
                 });
         }
     }
 
     const onSendAlert = () => {
+      ReactGA.event({category: 'user', action: 'submitted'});
+      navigate.current('/alerted');
+    }
+    const onDetectLocation = () => {
         setLoading(true);
-        ReactGA.event({category: 'user', action: 'submitted'});
         if ("geolocation" in navigator) {
             navigator.geolocation.getCurrentPosition(
                 handlePosition,
@@ -107,9 +116,27 @@ const Emergency = () => {
         <React.Fragment>
             <Header hasHeadline hasLangSelector />
             <Content>
-                {loading && <Card className={styles.textCenter}>Loading</Card>}
+                {displayStep === 1 && <>
+                   <Text className={styles.title}>{t('confirm_location_title')}</Text>
+                   <Spacer size={20} />
+                   <Text>{t('your_detected_location')}: {currentValue.geolocation?.latitude}, {currentValue.geolocation?.longitude} accuracy {Math.floor(currentValue.geolocation!.accuracy)}{t('m')}</Text>
+                   <Map />
+                   <Spacer size={30} />
+                   <Text>{t('your_address')}</Text>
+                   <Spacer size={10} />
+                   <Input value={currentValue.address ? currentValue.address : ""} onChange={setAddress} label={t('your_address')} placeholder={t('your_address_placeholder')} />
+                    <Card className={styles.childContainer}>
+                      <Button className={styles.sosBtn} onClick={onSendAlert} fullWidth>
+                        <div>
+                          <ImgSOS fill="#FFF" />
+                          <Text>{t('emergency_submit_alert')}</Text>
+                        </div>
+                      </Button>
+                    </Card>
+                 </>}
+                {(displayStep === 0 && loading) && <Card className={styles.textCenter}>Loading</Card>}
 
-                {!loading && <>
+                {(displayStep === 0 && !loading) && <>
                     <Card className={styles.infoContainer}>
                         <Card className={styles.infoCard}>
                             <Text>{t('emergency_user_info')}</Text>
@@ -138,7 +165,7 @@ const Emergency = () => {
 
                     <Card className={styles.childContainer}>
                 {errorMessage && <FormErrorText>{errorMessage}</FormErrorText>}
-                    <Button className={styles.sosBtn} onClick={onSendAlert} fullWidth>
+                    <Button className={styles.sosBtn} onClick={onDetectLocation} fullWidth>
                     <div>
                     <ImgSOS fill="#FFF" />
                     <Text>{t('emergency_submit_alert')}</Text>
