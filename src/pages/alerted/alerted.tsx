@@ -1,13 +1,11 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import ReactGA from "react-ga4";
 import {Header} from "../../others/components/Header";
 import {Content} from "../../others/components/Content";
 import {Spacer} from "../../others/components/Spacer";
 import {Text} from "../../others/components/Text";
-import {Button} from "../../others/components/Button";
 import {useTranslation} from "react-i18next";
 import styles from "./alerted.module.css";
-import {useNavigate} from "react-router-dom";
 import {Card} from "../../others/components/Card";
 import {useSosInfoContext} from "../../others/contexts/sosInfo";
 import {ImgLocationPin} from "../../medias/images/UGT_Asset_UI_LocationPin";
@@ -15,15 +13,13 @@ import {ImgAlertCircle} from "../../medias/images/UGT_Asset_UI_AlertCircle";
 import {ImgAlertRedCircle} from "../../medias/images/UGT_Asset_UI_AlertRedCircle";
 import {postToApi} from "../../others/api/api";
 
-enum PageStatus { COUNT_DOWN, CANCELED, CONFIRMED};
+enum PageStatus { INITIAL, FAILED, CONFIRMED};
 
 const Alerted = () => {
     const { t } = useTranslation();
-    const navigate = useRef(useNavigate());
 
-    const [counter, setCounter] = useState(0);
     const [errorMessage, setErrorMessage] = useState<string>();
-    const [pageStatus, setPageStatus] = useState<PageStatus>(PageStatus.COUNT_DOWN);
+    const [pageStatus, setPageStatus] = useState<PageStatus>(PageStatus.INITIAL);
 
     const { currentValue, updateValue } = useSosInfoContext();
 
@@ -44,46 +40,24 @@ ${t('location_accuracy', {lng: 'en'})}: ${Math.floor(currentValue.geolocation!.a
 ${t('comment', {lng: 'en'})}: ${currentValue.addressComment}`
     }, [currentValue.address, currentValue.addressComment, currentValue.emergencyCode, currentValue.geolocation, currentValue.name, currentValue.phoneNumber, t]);
 
-    const onSubmit = async () => {
-        try {
-            await postToApi(parseBackMessage());
-
-            setPageStatus(PageStatus.CONFIRMED);
-            ReactGA.event({category: 'apiCall', action: 'succeeded'});
-        } catch(error) {
-            setErrorMessage(t('alerted_errorMessage'));
-            ReactGA.event({category: 'apiCall', action: 'failed'});
-            goBack();
+    const onSubmit = useCallback(async() => {
+      try {
+        if (currentValue.requestPending) {
+          await postToApi(parseBackMessage());
+          ReactGA.event({category: 'apiCall', action: 'succeeded'});
+          updateValue({requestPending: false});
         }
-
-        updateValue({requestPending: false});
-    };
-
-    const goBack = () => {
-        setPageStatus(PageStatus.CANCELED);
-        updateValue({requestPending: false});
-
-        setTimeout(() => {
-            navigate.current("/emergency");
-        }, 5000);
-    }
-
-    const onCancel = () => {
-        ReactGA.event({category: 'user', action: 'cancelled'});
-        goBack();
-    }
+        setPageStatus(PageStatus.CONFIRMED);
+      } catch(error) {
+        setErrorMessage(t('alerted_errorMessage'));
+        ReactGA.event({category: 'apiCall', action: 'failed'});
+        setPageStatus(PageStatus.FAILED);
+      }
+    }, [currentValue, t, updateValue, parseBackMessage]);
 
     useEffect(() => {
-        if(pageStatus === PageStatus.CANCELED) return;
-        if(counter === 0) onSubmit();
-
-        const timer = setInterval(() => setCounter(counter - 1), 1000);
-        return () => clearInterval(timer);
-    }, [counter]); // eslint-disable-line
-
-    useEffect(() => {
-        if(!currentValue.requestPending) navigate.current("/emergency");
-    }, []); // eslint-disable-line
+      onSubmit();
+    }, [onSubmit]);
 
     return (
         <React.Fragment>
@@ -138,22 +112,12 @@ ${t('comment', {lng: 'en'})}: ${currentValue.addressComment}`
                         <Card>
                             <h1>{t('alerted_title')}</h1>
                         </Card>
-
-                        <Card className={styles.textCenter}>
-                            <Text className={styles.text}>{t('alerted_subtitle')}</Text>
-                        </Card>
                     </Card>
 
                     <Spacer size={20} />
                     <div style={{display: "flex", justifyContent: "center"}}>
-                        {pageStatus === PageStatus.COUNT_DOWN &&
-                        <Button className={styles.submitButton} fullWidth onClick={onCancel} >
-                            <Text>{t('alerted_btn')} ({counter})</Text>
-                        </Button>}
-
-                        {pageStatus === PageStatus.CANCELED && <div className={styles.footerCenterMessage}>
+                        {pageStatus === PageStatus.FAILED && <div className={styles.footerCenterMessage}>
                             {errorMessage && <><Text className={styles.errorText}>{errorMessage}</Text><Spacer size={5} /></>}
-                            <Text className={styles.text}>{t('alerted_canceled')}</Text>
                         </div>}
                     </div>
                 </>
