@@ -15,7 +15,6 @@ export const getStreetAddressFromGeolocation = async (lat: number, lng: number) 
       } catch (exc) {
         return "";
       }
-      console.log('s5 ', Date());
     });
     console.log('s6 ', Date());
     return response;
