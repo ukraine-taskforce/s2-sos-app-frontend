@@ -67,6 +67,7 @@ const Emergency = () => {
     }
 
     const handlePosition = (position: GeolocationPosition) => {
+        console.log('e1 ', Date());
         if(currentValue.geolocation) {
             const newValue = {
                 requestPending: true,
@@ -76,8 +77,9 @@ const Emergency = () => {
                     accuracy: position.coords.accuracy
                 }
             };
+            console.log('e2 ', Date());
             ReactGA.event({category: 'location', action: 'gpsAccuracyMeters', value: position.coords.accuracy});
-
+            console.log('e3 ', Date());
             getStreetAddressFromGeolocation(position.coords.latitude, position.coords.longitude)
                 .then((address) => {
                     if(!address) {
@@ -87,6 +89,7 @@ const Emergency = () => {
                     updateValue({...newValue, address});
                     setDisplayStep(1);
                 });
+            console.log('e4 ', Date());
         }
     }
 
@@ -95,8 +98,11 @@ const Emergency = () => {
       navigate.current('/alerted');
     }
     const onDetectLocation = () => {
+        console.log('d1 ', Date());
         setLoading(true);
+        console.log('d2 ', Date());
         if ("geolocation" in navigator) {
+            console.log('d3 ', Date());
             navigator.geolocation.getCurrentPosition(
                 handlePosition,
                 (error) => {
@@ -104,6 +110,7 @@ const Emergency = () => {
                     onError();
                 },
                 {enableHighAccuracy: true});
+            console.log('d4 ', Date());
         } else {
             ReactGA.event({category: 'error', action: 'geoLocationMissing'});
         }
