@@ -82,12 +82,9 @@ const Emergency = () => {
                 .then((address) => {
                     if(!address) {
                         ReactGA.event({category: 'error', action: 'getAddressError'});
-                        onError();
-                        return;
                     }
 
                     updateValue({...newValue, address});
-                    //navigate.current('/alerted');
                     setDisplayStep(1);
                 });
         }
