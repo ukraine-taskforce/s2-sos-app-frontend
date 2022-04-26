@@ -54,5 +54,12 @@
     "accuracy": "accuracy",
     "confirm_location_title": "Confirm your location",
     "your_detected_location": "GPS location",
-    "your_address_placeholder": "Your current address"
+    "your_address_placeholder": "Your current address",
+    "about_dialog_head": "About Ukraine Global Taskforce",
+    "about_dialog_detailed": "The goal of Ukraine Global Taskforce is to come together and work on various projects to altogether minimize the impact of the war and most importantly, equip/help/support our extended family of ukrainians.",
+    "share": "Share",
+    "about": "About us",
+    "contact_us": "Contact us",
+    "share_title": "Sylnishi - the all-in-one web app for Ukrainians within and outside of Ukraine.",
+    "share_text": "Find everything that you need as an Ukrainian in foreign countries in just one location"
 }

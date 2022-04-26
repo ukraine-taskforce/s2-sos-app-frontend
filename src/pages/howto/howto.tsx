@@ -17,11 +17,19 @@ import { ImgNext } from '../../medias/images/UGT_Asset_UI_ButtonNext';
 
 import styles from './howto.module.css';
 import {useSosInfoContext} from "../../others/contexts/sosInfo";
+import {ImgInfo} from "../../medias/images/UGT_Asset_UI_Info";
+import {Spacer} from "../../others/components/Spacer";
+import {ImgBrand} from "../../medias/images/UGT_Asset_Brand";
+import {ImgShare} from "../../medias/images/UGT_Asset_UI_Share";
+import {Modal} from "../../others/components/Modal";
+import {isShareSupported, useShare} from "../../others/helpers/share";
 
 export function Howto() {
     const { t } = useTranslation();
+    const { share } = useShare();
     const navigate = useNavigate();
     const [displayStep, setDisplayStep] = React.useState(0);
+    const [displayModal, setDisplayModal] = React.useState(false);
     const { currentValue, updateValue } = useSosInfoContext();
 
     const handleChange = () => {
@@ -51,6 +59,17 @@ export function Howto() {
                         <Text alignment='center' className={styles.textB}>
                             <Markdown>{t('howto_text_0')}</Markdown>
                         </Text>
+
+                        <div className={styles.aboutContainer}>
+                            <Button
+                                leadingIcon={<ImgInfo alt="" />}
+                                variant="white"
+                                centered={false}
+                                onClick={() => setDisplayModal(true)}
+                            >
+                                <span className={styles.noWrap}>{t('about')}</span>
+                            </Button>
+                        </div>
 
                         <Button
                             variant='highlight'
@@ -137,6 +156,51 @@ export function Howto() {
                         </div>
                     </>
                 )}
+
+                {/* About modal */}
+                <Modal show={displayModal} handleClose={() => setDisplayModal(false)}>
+                    <Spacer size={50} />
+                    <div style={{ display: "flex" }}>
+                        <Spacer flex={1} />
+                        <ImgBrand className={styles.ugtLogo} alt="UGT Logo" />
+                        <Spacer flex={1} />
+                    </div>
+                    <Spacer size={20} />
+                    <h1 style={{ textAlign: "center" }}>{t("about_dialog_head")}</h1>
+                    <Spacer size={22} />
+                    <div style={{textAlign: "center"}}><Text>{t("about_dialog_detailed")}</Text></div>
+                    <Spacer size={22} />
+                    {isShareSupported() && (
+                        <Button
+                            fullWidth
+                            centered
+                            variant="highlight"
+                            onClick={() => {
+                                share();
+                            }}
+                            trailingIcon={
+                                <ImgShare style={{ height: "15px" }} fill="var(--color-white)" alt={t("share")} />
+                            }
+                        >
+                            {t("share")}
+                        </Button>
+                    )}
+
+                    <Button
+                        fullWidth
+                        centered
+                        variant="white"
+                        onClick={(e) => {
+                            const w = window.open('','_blank');
+                            if(!w) return;
+                            w.location.href = "mailto:ugt@ukraineglobaltaskforce.com";
+                            w.focus();
+                            e.preventDefault();
+                        }}
+                    >
+                        <span className={styles.noWrap}>{t('contact_us')}</span>
+                    </Button>
+                </Modal>
             </Content>
         </React.Fragment>
     );
