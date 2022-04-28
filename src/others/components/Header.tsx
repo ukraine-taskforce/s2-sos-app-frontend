@@ -87,7 +87,6 @@ export const Header: React.FunctionComponent<HeaderProps> = ({ backLink, hasHead
               {t("share")}
             </Button>
         )}
-
         <div className={styles.contactLabel}
              onClick={(e) => {
                  const w = window.open('','_blank');
@@ -97,7 +96,7 @@ export const Header: React.FunctionComponent<HeaderProps> = ({ backLink, hasHead
                    e.preventDefault();
              }}
              >
-            <span>ugt@ukraineglobaltaskforce.com</span>
+            {t("contact_us_at")} <span>ugt@ukraineglobaltaskforce.com</span>
         </div>
       </Modal>
     </div>
